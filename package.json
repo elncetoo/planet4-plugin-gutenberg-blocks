@@ -33,6 +33,6 @@
   },
   "dependencies": {
     "classnames": "^2.2.6",
-    "postcss-css-variables": "file:../../../../../../../postcss-css-variables"
+    "postcss-css-variables-extract": "^0.1.0"
   }
 }
