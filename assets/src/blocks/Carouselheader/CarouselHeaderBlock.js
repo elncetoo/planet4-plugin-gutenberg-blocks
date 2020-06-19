@@ -150,7 +150,20 @@ export class CarouselHeaderBlock {
               link_url: '',
               link_url_new_tab: false,
             }
-          ]
+          ],
+          validation: slides => {
+            let isSlidesValid = true;
+            let errorMessages = [];
+
+            slides.forEach( (slide, index) => {
+              if (slide.image === null) {
+                isSlidesValid = false;
+                errorMessages.push(`Carousel Header Block: Slide ${ index + 1 } has no image`);
+              }
+            });
+      
+            return{isValid: isSlidesValid, messages: errorMessages}
+          }
         },
       },
       edit: ({isSelected, attributes, setAttributes}) => {
@@ -262,4 +275,3 @@ export class CarouselHeaderBlock {
     });
   };
 }
-
