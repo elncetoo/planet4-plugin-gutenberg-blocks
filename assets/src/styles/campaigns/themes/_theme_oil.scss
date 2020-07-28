@@ -81,21 +81,17 @@ body.theme-oil {
     min-height: 0;
     margin-bottom: 2rem;
 
+    .container > *:not(.row) {
+      @include x-large-and-up {
+        max-width: 80%;
+      }
+    }
+
     .page-header-title,
     .page-header-subtitle {
       font-family: $anton;
       text-transform: uppercase;
       font-weight: $bold;
-    }
-
-    .page-header-title {
-      font-size: 3.125rem;
-      line-height: 4.375rem;
-    }
-
-    .page-header-subtitle {
-      font-size: $font-size-xl;
-      line-height: 2.5rem;
     }
 
     .page-header-content {

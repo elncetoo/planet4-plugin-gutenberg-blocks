@@ -64,16 +64,18 @@ body.theme-forest {
   .page-header {
     @include page-header-block($kanit);
 
+    .container > *:not(.row) {
+      @include x-large-and-up {
+        max-width: 80%;
+      }
+    }
+
     .page-header-title {
-      font-size: 3.125rem;
-      line-height: 3.75rem;
       color: $forest-black;
       font-weight: $extra-bold;
     }
 
     .page-header-subtitle {
-      font-size: 1.875rem;
-      line-height: 2.25rem;
       color: $forest-black;
       font-weight: $semi-bold;
     }

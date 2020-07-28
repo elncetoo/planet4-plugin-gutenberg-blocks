@@ -99,21 +99,17 @@ body.theme-climate {
     min-height: 0;
     margin-bottom: 2rem;
 
+    .container > *:not(.row) {
+      @include x-large-and-up {
+        max-width: 80%;
+      }
+    }
+
     .page-header-title,
     .page-header-subtitle {
       font-family: $jost;
       text-transform: uppercase;
       font-weight: $bold;
-    }
-
-    .page-header-title {
-      font-size: 3.125rem;
-      line-height: 4.375rem;
-    }
-
-    .page-header-subtitle {
-      font-size: $font-size-xl;
-      line-height: 2.5rem;
     }
 
     .page-header-content {
@@ -130,11 +126,6 @@ body.theme-climate {
 
     @include small-and-up {
       background-image: linear-gradient(116deg, $bg-gradient-start, $bg-gradient-end);
-
-      .page-header-title {
-        font-size: 5.625rem;
-        line-height: 1;
-      }
     }
 
     @include large-and-up {
