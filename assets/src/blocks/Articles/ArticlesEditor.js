@@ -153,7 +153,7 @@ const renderView = ({ attributes, postType, posts, totalPosts }, toAttribute) =>
 export const ArticlesEditor = (props) => {
   const { isSelected, attributes, setAttributes } = props;
 
-  const { postType, postId } = ((select) => ({
+  const { postType, postId } = useSelect((select) => ({
     postType: select('core/editor').getCurrentPostType(),
     postId: select('core/editor').getCurrentPostId()
   })

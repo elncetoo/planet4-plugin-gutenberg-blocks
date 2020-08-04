@@ -1,6 +1,9 @@
 import { Fragment } from '@wordpress/element';
 import { HappypointFrontend } from './HappypointFrontend';
 import { useSelect } from '@wordpress/data';
+import { useState } from '@wordpress/element';
+
+import { debounce } from 'lodash';
 
 const {
   InspectorControls,
@@ -23,8 +26,9 @@ import {
 } from '@wordpress/components';
 
 export const HappypointEditor = ({ attributes, setAttributes, isSelected }) => {
+  const { focus_image, opacity, mailing_list_iframe, id, iframe_url } = attributes;
+  const [iframeUrl, setIframeUrl] = useState(iframe_url || '');
   const dimensions = { width: 400, height: 100 };
-  const { focus_image, opacity, mailing_list_iframe, iframe_url, id } = attributes;
 
   const { imageUrl } = useSelect(select => {
     let imageUrl = '';
@@ -67,19 +71,19 @@ export const HappypointEditor = ({ attributes, setAttributes, isSelected }) => {
     [attributeName]: value
   });
 
-  function onFocalPointChange({ x, y }) {
+  const onFocalPointChange = ({ x, y }) => {
     const floatX = parseFloat(x).toFixed(2);
     const floatY = parseFloat(y).toFixed(2);
     setAttributes({ focus_image: `${floatX * 100}% ${floatY * 100}%` });
   }
 
-  function onRemoveImages() {
-    setAttributes({ id: -1, focus_image: '' });
-  }
+  const onRemoveImages = () => setAttributes({ id: -1, focus_image: '' });
 
-  function selectImage({ id }) {
-    setAttributes({ id });
-  }
+  const selectImage = ({ id }) => setAttributes({ id });
+
+  const debounceIframeUrl = debounce(url => {
+    setAttributes( { iframe_url: url } );
+  }, 300);
 
   return (
     <Fragment>
@@ -107,8 +111,11 @@ export const HappypointEditor = ({ attributes, setAttributes, isSelected }) => {
                 label={__('Iframe url', 'planet4-blocks-backend')}
                 placeholder={__('Enter Iframe url', 'planet4-blocks-backend')}
                 help={__('If a url is set in this field and the \'mailing list iframe\' option is enabled, it will override the planet4 engaging network setting.', 'planet4-blocks-backend')}
-                value={iframe_url}
-                onChange={toAttribute('iframe_url')}
+                value={iframeUrl}
+                onChange={url => {
+                  setIframeUrl(url);
+                  debounceIframeUrl(url);
+                }}
               />
             </PanelBody>
           </InspectorControls>
@@ -155,7 +162,7 @@ export const HappypointEditor = ({ attributes, setAttributes, isSelected }) => {
           }
         </div>
       )}
-      {!id && <p>{__('Select Background Image', 'planet4-blocks-backend')}</p>}
+      {id <= 0 && <p>{__('Select Background Image', 'planet4-blocks-backend')}</p>}
       <MediaUploadCheck>
         <MediaUpload
           title={__('Select Background Image', 'planet4-blocks-backend')}

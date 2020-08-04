@@ -70,9 +70,8 @@ export class HappypointFrontend extends Component {
     if (mailing_list_iframe || iframe_url) {
       url = iframe_url || engaging_network_id;
     }
-    console.log(mailing_list_iframe, url)
 
-    return id && id > -1 && (
+    return (
       <section className="block block-footer block-wide happy-point-block-wrap">
         <picture>
           <img
@@ -93,9 +92,9 @@ export class HappypointFrontend extends Component {
               <div className="col-md-10 happy-point" id="happy-point" data-src={url}>
                 <iframe
                   src={url}
-                  cellspacing="0"
+                  cellSpacing={0}
                   allowtransparency="true"
-                  frameborder="0"
+                  frameBorder={0}
                   scrolling="no"
                   width="100%"
                 />
