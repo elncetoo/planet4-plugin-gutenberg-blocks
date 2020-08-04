@@ -52,7 +52,6 @@ export class HappypointFrontend extends Component {
       opacity,
       mailing_list_iframe,
       iframe_url,
-      load_iframe,
       id
     } = this.props;
 
@@ -68,9 +67,10 @@ export class HappypointFrontend extends Component {
     } = this.state;
 
     let url = '';
-    if (mailing_list_iframe === 'true' || iframe_url) {
+    if (mailing_list_iframe || iframe_url) {
       url = iframe_url || engaging_network_id;
     }
+    console.log(mailing_list_iframe, url)
 
     return id && id > -1 && (
       <section className="block block-footer block-wide happy-point-block-wrap">
@@ -89,18 +89,16 @@ export class HappypointFrontend extends Component {
         </picture>
         <div className="container">
           <div className="row justify-content-md-center">
-            {(mailing_list_iframe === 'true' || iframe_url) &&
+            {mailing_list_iframe && url &&
               <div className="col-md-10 happy-point" id="happy-point" data-src={url}>
-                {load_iframe === 'true' &&
-                  <iframe
-                    src={url}
-                    cellspacing="0"
-                    allowtransparency="true"
-                    frameborder="0"
-                    scrolling="no"
-                    width="100%"
-                  />
-                }
+                <iframe
+                  src={url}
+                  cellspacing="0"
+                  allowtransparency="true"
+                  frameborder="0"
+                  scrolling="no"
+                  width="100%"
+                />
               </div>
             }
           </div>
