@@ -43,7 +43,7 @@ export const HappypointEditor = ({ attributes, setAttributes, isSelected }) => {
             onClick={openEvent}
             className='happypoint__imgs'
             width='400px'
-            style={{ padding: 10, opacity: opacity / 100, }}
+            style={{ padding: 10, opacity: opacity ? (opacity / 100) : 0.3, }}
           />
         </div>
       );
@@ -72,6 +72,10 @@ export const HappypointEditor = ({ attributes, setAttributes, isSelected }) => {
 
   function onRemoveImages() {
     setAttributes({ id: -1, focus_image: '' });
+  }
+
+  function selectImage({ id, url }) {
+    setAttributes({ id, url });
   }
 
   return isSelected && (
@@ -108,7 +112,7 @@ export const HappypointEditor = ({ attributes, setAttributes, isSelected }) => {
           <Toolbar>
             <MediaUploadCheck>
               <MediaUpload
-                onSelect={toAttribute('id')}
+                onSelect={selectImage}
                 allowedTypes={['image']}
                 value={id}
                 type='image'
@@ -139,10 +143,7 @@ export const HappypointEditor = ({ attributes, setAttributes, isSelected }) => {
           <MediaUpload
             title={__('Select Background Image', 'planet4-blocks-backend')}
             type='image'
-            onSelect={({ id, url }) => {
-              toAttribute('id')(id);
-              toAttribute('url')(url);
-            }}
+            onSelect={selectImage}
             value={id}
             allowedTypes={['image']}
             render={({ open }) => getImageOrButton(open)}
