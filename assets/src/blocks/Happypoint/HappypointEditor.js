@@ -1,4 +1,6 @@
 import { Fragment } from '@wordpress/element';
+import { HappypointFrontend } from './HappypointFrontend';
+import { useSelect } from '@wordpress/data';
 
 const {
   InspectorControls,
@@ -22,7 +24,16 @@ import {
 
 export const HappypointEditor = ({ attributes, setAttributes, isSelected }) => {
   const dimensions = { width: 400, height: 100 };
-  const { focus_image, opacity, mailing_list_iframe, iframe_url, url, id } = attributes;
+  const { focus_image, opacity, mailing_list_iframe, iframe_url, id } = attributes;
+
+  const { imageUrl } = useSelect(select => {
+    let imageUrl = '';
+    if (id && id > 0) {
+      const imageDetails = select('core').getMedia(id);
+      imageUrl = (imageDetails && imageDetails.source_url) || '';
+    }
+    return { imageUrl };
+  }, []);
 
   let focal_point_params = { x: '', y: '' };
 
@@ -37,15 +48,7 @@ export const HappypointEditor = ({ attributes, setAttributes, isSelected }) => {
   const getImageOrButton = (openEvent) => {
     if (id && 0 < id) {
       return (
-        <div align='center'>
-          <img
-            src={url}
-            onClick={openEvent}
-            className='happypoint__imgs'
-            width='400px'
-            style={{ padding: 10, opacity: opacity ? (opacity / 100) : 0.3, }}
-          />
-        </div>
+        <HappypointFrontend isEditing {...attributes} />
       );
     }
 
@@ -74,93 +77,95 @@ export const HappypointEditor = ({ attributes, setAttributes, isSelected }) => {
     setAttributes({ id: -1, focus_image: '' });
   }
 
-  function selectImage({ id, url }) {
-    setAttributes({ id, url });
+  function selectImage({ id }) {
+    setAttributes({ id });
   }
 
-  return isSelected && (
+  return (
     <Fragment>
-      <InspectorControls>
-        <PanelBody title={__('Setting', 'planet4-blocks-backend')}>
-          <RangeControl
-            label={__('Opacity', 'planet4-blocks-backend')}
-            value={opacity}
-            onChange={toAttribute('opacity')}
-            min={1}
-            max={100}
-            initialPosition={opacity}
-            help={__('We use an overlay to fade the image back. Use a number between 1 and 100, the higher the number, the more faded the image will look. If you leave this empty, the default of 30 will be used.', 'planet4-blocks-backend')}
-          />
-          <ToggleControl
-            label={__('Use mailing list iframe', 'planet4-blocks-backend')}
-            help={__('Use mailing list iframe', 'planet4-blocks-backend')}
-            value={mailing_list_iframe}
-            checked={mailing_list_iframe}
-            onChange={toAttribute('mailing_list_iframe')}
-          />
-          <TextControl
-            label={__('Iframe url', 'planet4-blocks-backend')}
-            placeholder={__('Enter Iframe url', 'planet4-blocks-backend')}
-            help={__('If a url is set in this field and the \'mailing list iframe\' option is enabled, it will override the planet4 engaging network setting.', 'planet4-blocks-backend')}
-            value={iframe_url}
-            onChange={toAttribute('iframe_url')}
-          />
-        </PanelBody>
-      </InspectorControls>
-      <BlockControls>
-        {id && 0 < id && (
-          <Toolbar>
-            <MediaUploadCheck>
-              <MediaUpload
-                onSelect={selectImage}
-                allowedTypes={['image']}
-                value={id}
-                type='image'
-                render={({ open }) => {
-                  return (
-                    <IconButton
-                      className='components-icon-button components-toolbar__control'
-                      label={__('Edit Image', 'planet4-blocks-backend')}
-                      onClick={open}
-                      icon='edit'
-                    />
-                  );
-                }}
-              />
-            </MediaUploadCheck>
-            <IconButton
-              className='components-icon-button components-toolbar__control'
-              label={__('Remove Image', 'planet4-blocks-backend')}
-              onClick={onRemoveImages}
-              icon='trash'
-            />
-          </Toolbar>
-        )}
-      </BlockControls>
-      {!id && <p>{__('Select Background Image', 'planet4-blocks-backend')}</p>}
-      <div>
-        <MediaUploadCheck>
-          <MediaUpload
-            title={__('Select Background Image', 'planet4-blocks-backend')}
-            type='image'
-            onSelect={selectImage}
-            value={id}
-            allowedTypes={['image']}
-            render={({ open }) => getImageOrButton(open)}
-          />
-        </MediaUploadCheck>
-      </div>
-      {id && 0 < id &&
+      {isSelected && (
         <div>
-          {__('Select focus point for background image', 'planet4-blocks-backend')}
-          <FocalPointPicker
-            url={url}
-            dimensions={dimensions}
-            value={focal_point_params}
-            onChange={onFocalPointChange}
-          />
+          <InspectorControls>
+            <PanelBody title={__('Setting', 'planet4-blocks-backend')}>
+              <RangeControl
+                label={__('Opacity', 'planet4-blocks-backend')}
+                value={opacity}
+                onChange={toAttribute('opacity')}
+                min={1}
+                max={100}
+                initialPosition={opacity}
+                help={__('We use an overlay to fade the image back. Use a number between 1 and 100, the higher the number, the more faded the image will look. If you leave this empty, the default of 30 will be used.', 'planet4-blocks-backend')}
+              />
+              <ToggleControl
+                label={__('Use mailing list iframe', 'planet4-blocks-backend')}
+                help={__('Use mailing list iframe', 'planet4-blocks-backend')}
+                value={mailing_list_iframe}
+                checked={mailing_list_iframe}
+                onChange={toAttribute('mailing_list_iframe')}
+              />
+              <TextControl
+                label={__('Iframe url', 'planet4-blocks-backend')}
+                placeholder={__('Enter Iframe url', 'planet4-blocks-backend')}
+                help={__('If a url is set in this field and the \'mailing list iframe\' option is enabled, it will override the planet4 engaging network setting.', 'planet4-blocks-backend')}
+                value={iframe_url}
+                onChange={toAttribute('iframe_url')}
+              />
+            </PanelBody>
+          </InspectorControls>
+          <BlockControls>
+            {id && 0 < id && (
+              <Toolbar>
+                <MediaUploadCheck>
+                  <MediaUpload
+                    onSelect={selectImage}
+                    allowedTypes={['image']}
+                    value={id}
+                    type='image'
+                    render={({ open }) => {
+                      return (
+                        <IconButton
+                          className='components-icon-button components-toolbar__control'
+                          label={__('Edit Image', 'planet4-blocks-backend')}
+                          onClick={open}
+                          icon='edit'
+                        />
+                      );
+                    }}
+                  />
+                </MediaUploadCheck>
+                <IconButton
+                  className='components-icon-button components-toolbar__control'
+                  label={__('Remove Image', 'planet4-blocks-backend')}
+                  onClick={onRemoveImages}
+                  icon='trash'
+                />
+              </Toolbar>
+            )}
+          </BlockControls>
+          {id && 0 < id &&
+            <div>
+              {__('Select focus point for background image', 'planet4-blocks-backend')}
+              <FocalPointPicker
+                url={imageUrl}
+                dimensions={dimensions}
+                value={focal_point_params}
+                onChange={onFocalPointChange}
+              />
+            </div>
+          }
         </div>
-      }
+      )}
+      {!id && <p>{__('Select Background Image', 'planet4-blocks-backend')}</p>}
+      <MediaUploadCheck>
+        <MediaUpload
+          title={__('Select Background Image', 'planet4-blocks-backend')}
+          type='image'
+          onSelect={selectImage}
+          value={id}
+          allowedTypes={['image']}
+          render={({ open }) => getImageOrButton(open)}
+        />
+      </MediaUploadCheck>
     </Fragment>
   );
 }

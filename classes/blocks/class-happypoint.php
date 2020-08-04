@@ -41,7 +41,7 @@ class Happypoint extends Base_Block {
 						'type' => 'integer',
 					],
 					'focus_image'         => [
-						'type'    => 'string',
+						'type' => 'string',
 					],
 					'opacity'             => [
 						'type'    => 'integer',
