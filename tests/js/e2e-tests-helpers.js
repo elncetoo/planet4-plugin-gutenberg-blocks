@@ -1,6 +1,7 @@
 import {
   getAllBlocks,
   selectBlockByClientId,
+  pressKeyWithModifier,
 } from '@wordpress/e2e-test-utils';
 
 /**
@@ -51,7 +52,6 @@ export const typeInInputWithLabel = async ( label, value ) => {
   const [ inputEl ] = await page.$x( `//label[@class="components-base-control__label"][contains(text(),"${ label }")]/following-sibling::input[@class="components-text-control__input"]` );
   const propertyHandle = await inputEl.getProperty('id');
   const inputId = await propertyHandle.jsonValue();
-
   await page.type( `#${ inputId }`, value);
 };
 
@@ -71,5 +71,71 @@ export const openSidebarPanelWithTitle = async ( title ) => {
 
   if ( panel ) {
     await panel.click();
+  }
+};
+
+/**
+ * Types in an inline input element(richtext) based on its placeholder label.
+ *
+ * @param {string} label Placeholder text of the rich text input.
+ * @param {string} value Value to be applied to the input.
+ */
+export const typeInInputWithPlaceholderLabel = async ( label, value ) => {
+  const [ element ] = await page.$x( `//*[contains(@class,"block-editor-rich-text__editable")][contains(@aria-label,"${ label }")]` );
+  await element.click();
+  await page.waitForSelector( ':focus.rich-text' );
+  await page.keyboard.type( value );
+};
+
+/**
+ * Types in an autocomplete input element based on its label.
+ *
+ * @param {string} label Label text of the text input.
+ * @param {string} value Value to be applied to the input.
+ */
+export const typeInDropdownWithLabel = async ( label, value ) => {
+  // Wait for 0.3 sec.
+  await new Promise((r) => setTimeout(r, 300));
+  const [ inputEl ] = await page.$x( `//label[contains(text(),"${ label }")]/following-sibling::div//input[@class="components-form-token-field__input"]` );
+
+  const propertyHandle = await inputEl.getProperty('id');
+  const inputId = await propertyHandle.jsonValue();
+
+  await page.type( `#${ inputId }`, value.slice(0, 4));
+  await page.$eval('span[aria-label="'+value+'"]', (el) => el.click() );
+};
+
+/**
+ * Remove the existing text of input field, if exists.
+ *
+ * @param {string} label Text of the label before the text input.
+ */
+export const clearPreviousTextWithLabel = async ( label ) => {
+  const [ inputEl ] = await page.$x( `//label[@class="components-base-control__label"][contains(text(),"${ label }")]/following-sibling::input[@class="components-text-control__input"]` );
+
+  const valuePropertyHandle = await inputEl.getProperty('value');
+  const inputValue = await valuePropertyHandle.jsonValue();
+  if ( inputValue ) {
+    await inputEl.click();
+    await pressKeyWithModifier( 'primary', 'a' );
+    await page.keyboard.press( 'Backspace' );
+  }
+};
+
+/**
+ * Remove the existing text of richtext field, if exists.
+ *
+ * @param {string} placeholder Text of the richtext input.
+ */
+export const clearPreviousTextWithPlaceholder = async ( placeholder ) => {
+  const [ inputEl ] = await page.$x( `//*[contains(@class,"block-editor-rich-text__editable")][contains(@aria-label,"${ placeholder }")]` );
+  await inputEl.click();
+  let inputValue = await page.evaluate(
+    () => document.activeElement.textContent
+  );
+
+  if ( inputValue ) {
+    await pressKeyWithModifier( 'primary', 'a' );
+    await page.keyboard.press( 'Backspace' );
   }
 };
