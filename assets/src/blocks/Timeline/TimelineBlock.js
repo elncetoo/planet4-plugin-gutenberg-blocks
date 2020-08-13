@@ -1,12 +1,36 @@
-import {Timeline} from './Timeline.js';
+import {frontendRendered} from '../frontendRendered';
+import {TimelineEditor} from './TimelineEditor';
 
 const {__} = wp.i18n;
+const BLOCK_NAME = 'planet4-blocks/timeline';
+
+const attributes = {
+  timeline_title: {
+    type: 'string',
+  },
+  description: {
+    type: 'string',
+  },
+  google_sheets_url: {
+    type: 'string',
+  },
+  language: {
+    type: 'string',
+    default: 'en',
+  },
+  timenav_position: {
+    type: 'string',
+  },
+  start_at_end: {
+    type: 'boolean',
+  },
+};
 
 export class TimelineBlock {
   constructor() {
     const {registerBlockType} = wp.blocks;
 
-    registerBlockType('planet4-blocks/timeline', {
+    registerBlockType(BLOCK_NAME, {
       title: __('Timeline', 'p4ge'),
       icon: 'clock',
       category: 'planet4-blocks',
@@ -61,66 +85,23 @@ export class TimelineBlock {
           },
         ]
       },
-      attributes: {
-        timeline_title: {
-          type: 'string',
-        },
-        description: {
-          type: 'string',
-        },
-        google_sheets_url: {
-          type: 'string',
-        },
-        language: {
-          type: 'string',
-          default: 'en',
-        },
-        timenav_position: {
-          type: 'string',
-        },
-        start_at_end: {
-          type: 'boolean',
-        },
-      },
+      attributes,
       edit: ({ isSelected, attributes, setAttributes }) => {
-        function onTimelineTitleChange(value) {
-          setAttributes({timeline_title: value});
-        }
-
-        function onDescriptionChange(value) {
-          setAttributes({description: value});
-        }
-
-        function onGoogleSheetsUrlChange(value) {
-          setAttributes({google_sheets_url: value});
-        }
-
-        function onLanguageChange(value) {
-          setAttributes({language: value});
-        }
-
-        function onTimenavPositionChange(value) {
-          setAttributes({timenav_position: value});
-        }
-
-        function onStartAtEndChange(value) {
-          setAttributes({start_at_end: value});
-        }
-
-        return <Timeline
-          {...attributes}
+        return <TimelineEditor
+          attributes={attributes}
+          setAttributes={setAttributes}
           isSelected={isSelected}
-          onTimelineTitleChange={onTimelineTitleChange}
-          onDescriptionChange={onDescriptionChange}
-          onGoogleSheetsUrlChange={onGoogleSheetsUrlChange}
-          onLanguageChange={onLanguageChange}
-          onTimenavPositionChange={onTimenavPositionChange}
-          onStartAtEndChange={onStartAtEndChange}
         />
       },
-      save() {
-        return null;
-      }
+      save: frontendRendered(BLOCK_NAME),
+      deprecated: [
+        {
+          attributes,
+          save() {
+            return null;
+          }
+        }
+      ]
     });
   };
 }
