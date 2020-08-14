@@ -1,20 +1,20 @@
-import { Fragment, useEffect } from '@wordpress/element';
-import { getSubmenuStyle, addSubmenuActions } from './submenuFunctions';
+import { getSubmenuStyle } from './getSubmenuStyle';
 import { SubmenuItems } from './SubmenuItems';
-import { useSubmenuItemsLoad } from './useSubmenuItemsLoad';
+import { makeHierarchical } from './makeHierarchical';
+import { getHeadingsFromDom } from './getHeadingsFromDom';
+import { BackTop } from './BackTop';
 
 export const SubmenuFrontend = ({ title, className, levels, submenu_style }) => {
 
-  const { menuItems } = useSubmenuItemsLoad(levels, false);
-
-  useEffect(() => addSubmenuActions(menuItems), [menuItems]);
-
+  const headings = getHeadingsFromDom(levels);
+  const menuItems = makeHierarchical(headings);
   const style = getSubmenuStyle(className, submenu_style);
 
   return (
-    <section className={`block submenu-block submenu-${style}`}>
-      <h2>{title}</h2>
-      <SubmenuItems menuItems={menuItems} />
+    <section className={ `block submenu-block submenu-${ style }` }>
+      <h2>{ title }</h2>
+      <SubmenuItems menuItems={ menuItems }/>
+      <BackTop/>
     </section>
   );
-}
+};
