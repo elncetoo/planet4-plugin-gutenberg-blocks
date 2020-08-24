@@ -43,6 +43,14 @@ namespace P4GBKS\Blocks;
                         'type'    => 'string',
                         'default' => '',
                     ],
+                    // 'heading_id'      => [
+                    //     'type'    => 'array',
+                    //     'default' => [],
+                    // ],
+                    // 'accordion_open'      => [
+                    //     'type'    => 'boolean',
+                    //     'default' => false,
+                    // ],
                     'accordion_headline'      => [
                         'type'    => 'string',
                         'default' => '',

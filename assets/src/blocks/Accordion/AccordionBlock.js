@@ -21,18 +21,27 @@ export class AccordionBlock {
         default: '',
         selector: '.page-section-description'
       },
-      // accordion: {
+      // heading_id: {
       //   type: "array",
       //   default: [],
-        accordion_section: {
-          type: 'integer',
-          default: ''
-        },
+      // },
+        // accordion_button: {
+        //   type: 'boolean',
+        //   source: 'attribute',
+        //   selector: 'button',
+        //   attribute: 'collapse'
+        // },
+        // accordion_open: {
+        //   type: 'boolean',
+        //   default: false,
+        //   source: 'attribute',
+        //   selector: 'button',
+        //   attribute: 'collapse'
+        // },
         accordion_headline: {
           type: 'string',
           default: '',
           selector: '.accordion-btn'
-
         },
         accordion_text: {
           type: 'string',
@@ -57,6 +66,10 @@ export class AccordionBlock {
       title: __( 'Accordion', 'planet4-blocks-backend' ),
       icon: 'menu',
       category: 'planet4-blocks',
+      keywords: [
+        __(this.BLOCK_NAME),
+        __('faq')
+      ],
       attributes,
       deprecated: [
         {
