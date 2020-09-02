@@ -43,10 +43,10 @@ namespace P4GBKS\Blocks;
                         'type'    => 'string',
                         'default' => '',
                     ],
-                    // 'heading_id'      => [
-                    //     'type'    => 'array',
-                    //     'default' => [],
-                    // ],
+                    'headline_id'      => [
+                        'type'    => 'number',
+                        'default' =>  1,
+                    ],
                     // 'accordion_open'      => [
                     //     'type'    => 'boolean',
                     //     'default' => false,
@@ -59,10 +59,10 @@ namespace P4GBKS\Blocks;
                         'type'    => 'string',
                         'default' => '',
                     ],
-                    'accordion_icon'          => [
-                        'type'    => 'string',
-                        'default' => '',
-                    ],
+                    // 'accordion_icon'          => [
+                    //     'type'    => 'string',
+                    //     'default' => '',
+                    // ],
                     'accordion_style'         => [
                         'type'    => 'string',
                         'default' => '',

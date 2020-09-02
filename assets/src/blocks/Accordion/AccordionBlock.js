@@ -21,10 +21,10 @@ export class AccordionBlock {
         default: '',
         selector: '.page-section-description'
       },
-      // heading_id: {
-      //   type: "array",
-      //   default: [],
-      // },
+      headline_id: {
+        type: 'number',
+        default: 1,
+      },
         // accordion_button: {
         //   type: 'boolean',
         //   source: 'attribute',
@@ -48,11 +48,11 @@ export class AccordionBlock {
           default: '',
           selector: '.accordion-text'
         },
-        accordion_icon: {
-          type: 'string',
-          default: '',
-          selector: '.accordion-icon'
-        },
+        // accordion_icon: {
+        //   type: 'string',
+        //   default: '',
+        //   selector: '.accordion-icon'
+        // },
         accordion_style: { // Needed to convert existing blocks
           type: 'string',
           default: ''
@@ -98,16 +98,16 @@ export class AccordionBlock {
       [
         {
           name: 'minimal',
-          label: __( 'Text Only', 'planet4-blocks' ),
+          label: __( 'Minimal', 'planet4-blocks' ),
           isDefault: true
         },
         {
-          name: 'dark',
-          label: __( 'Dark Background', 'planet4-blocks' )
+          name: 'solid',
+          label: __( 'Solid color Background', 'planet4-blocks' )
         },
         {
-          name: 'light',
-          label: __( 'Light Background', 'planet4-blocks' )
+          name: 'gradient',
+          label: __( 'Gradient color Background', 'planet4-blocks' )
         }
       ]
     );
