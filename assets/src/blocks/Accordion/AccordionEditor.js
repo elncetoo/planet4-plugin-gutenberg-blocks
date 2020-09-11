@@ -11,7 +11,7 @@ import {
   CardBody
 } from '@wordpress/components';
 
-const { RichText } = wp.editor;
+const { RichText, InnerBlocks } = wp.editor;
 const { __ } = wp.i18n;
 
 export class AccordionEditor extends Component {
@@ -37,19 +37,65 @@ export class AccordionEditor extends Component {
 
   //renders the settings
   renderEdit() {
-    const { attributes,className } = this.props;
+    const { attributes } = this.props;
+    let { accordion_rows } = attributes;
+
+    accordion_rows = (attributes) => {
+      let accordion_rows = [];
+      if (attributes.accordion_headline.headline_1){
+        let accordion_row = {
+          accordion_headline: attributes.headline_1,
+          accordion_text: attributes.text_1 || ''
+        };
+        accordion_rows.push(Object.assign({}, accordion_row));
+
+        if (attributes.accordion_headline.headline_2){
+          let accordion_row = {
+            accordion_headline: attributes.headline_2,
+            accordion_text: attributes.text_2 || ''
+          };
+          accordion_rows.push(Object.assign({}, accordion_row));
+
+          if (attributes.accordion_headline.headline_3){
+            let accordion_row = {
+              accordion_headline: attributes.headline_3,
+              accordion_text: attributes.text_3 || ''
+            };
+            accordion_rows.push(Object.assign({}, accordion_row));
+
+            if (attributes.accordion_headline.headline_4){
+              let accordion_row = {
+                accordion_headline: attributes.headline_4,
+                accordion_text: attributes.text_4 || ''
+              };
+              accordion_rows.push(Object.assign({}, accordion_row));
+
+              if (attributes.accordion_headline.headline_5){
+                let accordion_row = {
+                  accordion_headline: attributes.headline_5,
+                  accordion_text: attributes.text_5 || ''
+                };
+                accordion_rows.push(Object.assign({}, accordion_row));
+                
+              }
+            }
+          }
+        }
+      }
+      return accordion_rows;
+    }
 
     return (
       <Fragment>
         <InspectorControls>
-          <PanelBody title={__('Setting', 'planet4-blocks-backend')}>
+          <PanelBody title={__('Settings', 'planet4-blocks-backend')}>
             <div>
               <p> Settings are showing OK. </p>
             </div>
           </PanelBody>
         </InspectorControls>
       </Fragment>
-    );
+    ); 
   }
 
 //renders the editor view
@@ -58,38 +104,70 @@ export class AccordionEditor extends Component {
     console.log(  "Attributes are: " +  this.props.name );
 
     return <Fragment>
-      <section>
-        <div className="block accordion-block">
-          <div className="drop-shadow">
-            <div className="my-1 accordion-headline">
-            <RichText
-              tagName="h3"
-              className="accordion mt-1 pt-2"
-              placeholder={__('Enter the headline here for the section', 'planet4-blocks-backend')}
-              value={attributes.accordion_headline}
-              onChange={this.toAttribute('accordion_headline')}
-              keepPlaceholderOnFocus={true}
-              withoutInteractiveFormatting
-              characterLimit={60}
-              multiline="false"
-            /> 
-            </div>
+        <section>
+          <div className="block accordion-block my-3">
+            <header>
+              <RichText
+                tagName="h2"
+                className="page-section-header"
+                placeholder={__('Enter title of the block here', 'planet4-blocks-backend')}
+                value={attributes.accordion_title}
+                onChange={this.toAttribute('accordion_title')}
+                keepPlaceholderOnFocus={true}
+                withoutInteractiveFormatting
+                characterLimit={100}
+                multiline="false"
+              />
+            
             <RichText
               tagName="p"
-              className="accordion-text"
-              placeholder={__('Enter some text here.. ', 'planet4-blocks-backend')}
-              value={attributes.accordion_text}
-              onChange={this.toAttribute('accordion_text')}
+              className="page-section-description"
+              placeholder={__('Enter description here', 'planet4-blocks-backend')}
+              value={attributes.accordion_description}
+              onChange={this.toAttribute('accordion_description')}
               keepPlaceholderOnFocus={true}
-              multiline="p"
+              withoutInteractiveFormatting
+              characterLimit={400}
+              multiline="false"
             />
+            </header>
+            <div className="accordion-content my-2">
+              <header className="accordion active">
+                <RichText
+                  tagName="h4"
+                  className="accordion-headline"
+                  placeholder={__('Enter the headline here for the section', 'planet4-blocks-backend')}
+                  value={attributes.accordion_headline}
+                  onChange={this.toAttribute('accordion_headline')}
+                  keepPlaceholderOnFocus={true}
+                  withoutInteractiveFormatting
+                  // characterLimit={100}
+                  multiline="false"
+                /> 
+              </header>
+              <div className="panel"> 
+                <RichText
+                  tagName="p"
+                  className="accordion-text"
+                  placeholder={__('Enter some text here.. ', 'planet4-blocks-backend')}
+                  value={attributes.accordion_text}
+                  onChange={this.toAttribute('accordion_text')}
+                  keepPlaceholderOnFocus={true}
+                  multiline="P"
+                />
+                {/* <button className="btn btn-secondary btn-accordion">
+                  Read More
+                </button> */}
+              </div>
+            </div>
+          
           </div>
-        </div>
-      </section>
+        </section>
 
-      <AccordionFrontend isEditing {...attributes} />
-    </Fragment>;
+        <AccordionFrontend isEditing {...attributes} />
+      </Fragment>;
   }
+
 
   render() {
     return (

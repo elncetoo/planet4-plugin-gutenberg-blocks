@@ -21,42 +21,39 @@ export class AccordionBlock {
         default: '',
         selector: '.page-section-description'
       },
-      headline_id: {
-        type: 'number',
-        default: 1,
-      },
-        // accordion_button: {
-        //   type: 'boolean',
-        //   source: 'attribute',
-        //   selector: 'button',
-        //   attribute: 'collapse'
-        // },
-        // accordion_open: {
-        //   type: 'boolean',
-        //   default: false,
-        //   source: 'attribute',
-        //   selector: 'button',
-        //   attribute: 'collapse'
-        // },
+      accordion_rows: {
+        type: 'array',
+        default: [],
+        selector: '.accordion-content',
+        
         accordion_headline: {
           type: 'string',
           default: '',
-          selector: '.accordion-btn'
+          selector: '.accordion-headline',
         },
         accordion_text: {
           type: 'string',
           default: '',
           selector: '.accordion-text'
         },
+      },
+      // accordion_open: {
+      //   type: 'boolean',
+      //   default: false,
+      //   source: 'attribute',
+      //   selector: 'button',
+      //   attribute: 'collapse'
+      // },
+     
         // accordion_icon: {
         //   type: 'string',
         //   default: '',
         //   selector: '.accordion-icon'
         // },
-        accordion_style: { // Needed to convert existing blocks
-          type: 'string',
-          default: ''
-        },
+        // accordion_style: { // Needed to convert existing blocks
+        //   type: 'string',
+        //   default: ''
+        // },
 
       // },
       css_variables: CSS_VARIABLES_ATTRIBUTE,
@@ -65,7 +62,7 @@ export class AccordionBlock {
     registerBlockType( BLOCK_NAME, {
       title: __( 'Accordion', 'planet4-blocks-backend' ),
       icon: 'menu',
-      category: 'planet4-blocks',
+      category: 'planet4-blocks-beta',
       keywords: [
         __(this.BLOCK_NAME),
         __('faq')
@@ -90,26 +87,26 @@ export class AccordionBlock {
     });
 
     // Remove the default style since it's the same as "text only"
-    unregisterBlockStyle(BLOCK_NAME, 'default');
+    // unregisterBlockStyle(BLOCK_NAME, 'default');
 
-    // Add our custom styles
-    registerBlockStyle(
-      BLOCK_NAME,
-      [
-        {
-          name: 'minimal',
-          label: __( 'Minimal', 'planet4-blocks' ),
-          isDefault: true
-        },
-        {
-          name: 'solid',
-          label: __( 'Solid color Background', 'planet4-blocks' )
-        },
-        {
-          name: 'gradient',
-          label: __( 'Gradient color Background', 'planet4-blocks' )
-        }
-      ]
-    );
+    // // Add our custom styles
+    // registerBlockStyle(
+    //   BLOCK_NAME,
+    //   [
+    //     {
+    //       name: 'minimal',
+    //       label: __( 'Minimal', 'planet4-blocks' ),
+    //       isDefault: true
+    //     },
+    //     {
+    //       name: 'solid',
+    //       label: __( 'Solid color Background', 'planet4-blocks' )
+    //     },
+    //     {
+    //       name: 'gradient',
+    //       label: __( 'Gradient color Background', 'planet4-blocks' )
+    //     }
+    //   ]
+    // );
   };
 }
