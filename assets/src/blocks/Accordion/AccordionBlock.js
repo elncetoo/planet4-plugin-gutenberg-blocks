@@ -25,7 +25,7 @@ export class AccordionBlock {
         type: 'array',
         default: [],
         selector: '.accordion-content',
-        
+            },  
         accordion_headline: {
           type: 'string',
           default: '',
@@ -36,7 +36,7 @@ export class AccordionBlock {
           default: '',
           selector: '.accordion-text'
         },
-      },
+
       // accordion_open: {
       //   type: 'boolean',
       //   default: false,
@@ -56,7 +56,7 @@ export class AccordionBlock {
         // },
 
       // },
-      css_variables: CSS_VARIABLES_ATTRIBUTE,
+      // css_variables: CSS_VARIABLES_ATTRIBUTE,
     };
 
     registerBlockType( BLOCK_NAME, {

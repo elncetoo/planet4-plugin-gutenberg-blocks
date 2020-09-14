@@ -51,6 +51,10 @@ namespace P4GBKS\Blocks;
                                 'type'       => 'object',
                                 // In JSON Schema you can specify object properties in the properties attribute.
                                 'properties' => [
+                                    'accordion_id'            => [
+                                        'type'    => 'integer',
+                                        'default' => 1,
+                                    ],
                                     'accordion_headline'      => [
                                         'type'    => 'string',
                                         'default' => '',
