@@ -63,14 +63,17 @@ namespace P4GBKS\Blocks;
                                         'type'    => 'string',
                                         'default' => '',
                                     ],
+                                    'accordion_btn_text'      => [
+                                        'type'    => 'string',
+                                        'default' => '',
+                                    ],
+                                    'accordion_btn_url'       => [
+                                        'type'    => 'url',
+                                        'default' => '',
+                                    ],
                                 ],
                             ],
                         ],
-
-                    // 'headline_id'      => [
-                    //     'type'    => 'integer',
-                    //     'default' =>  1,
-                    // ],
                     // 'accordion_style'         => [
                     //     'type'    => 'string',
                     //     'default' => '',
@@ -91,18 +94,22 @@ namespace P4GBKS\Blocks;
         $fields = [
 			'accordion_title'       => $attributes['accordion_title'] ?? '',
             'accordion_description' => $attributes['accordion_description'] ?? '',
+            'accordion_rows'        => $attributes['accordion_rows'] ?? '',
+            'accordion_id'          => $attributes['accordion_id'] ?? '',
             'accordion_headline'    => $attributes['accordion_headline'] ?? '',
 			'accordion_text'        => $attributes['accordion_text'] ?? '',
+			'accordion_btn_text'    => $attributes['accordion_btn_text'] ?? '',
+			'accordion_btn_url'     => $attributes['accordion_btn_url'] ?? '',
 
 		];
 
-        // Only show columns that have a title or a description.
-		$accordion_rows = array_filter(
-			$attributes['accordion_rows'],
-			static function ( array $accordion_row ) {
-				return ! empty( $accordion_row['accordion_headline'] ) || ! empty( $accordion_row['accordion_text'] );
-			}
-		);
+        // Only show rows that have a title or a description.
+		// $accordion_rows = array_filter(
+		// 	$attributes['accordion_rows'],
+		// 	static function ( array $accordion_row ) {
+		// 		return ! empty( $accordion_row['accordion_headline'] ) || ! empty( $accordion_row['accordion_text'] );
+		// 	}
+		// );
 
         $accordion_rows = array_slice( $accordion_rows, 0, self::MAX_ROWS );
 

@@ -6,21 +6,37 @@ import {
   PanelBody,
   Tooltip,
   Button,
-  Card,
-  CardHeader,
-  CardBody
+  Dashicon
 } from '@wordpress/components';
 
-const { RichText, InnerBlocks } = wp.editor;
+const { RichText, InnerBlocks } = wp.blockEditor;
 const { __ } = wp.i18n;
 
 export class AccordionEditor extends Component {
   constructor(props) {
     super(props);
-    // this.state = {};
+    this.state = {isToggleOn: true};
+
     this.handleErrors = this.handleErrors.bind(this);
     this.toAttribute = this.toAttribute.bind(this);
+    this.handleCollapseClick = this.handleCollapseClick.bind(this);
+
   }
+
+  handleCollapseClick() { 
+    this.setState(state => ({      
+    isToggleOn: !state.isToggleOn    
+    }));  
+
+    // this.state.isToggleOn === true ?  $('.panel').classList.remove('visibility') :  $('.panel').classList.add('visibility');
+    if (this.state.isToggleOn === true) {
+    $('.panel').removeClass('visibility'); 
+    } else {
+      $('.panel').addClass('visibility'); 
+    }
+      
+  }
+
 
   toAttribute(attributeName) {
     const { setAttributes } = this.props;
@@ -33,57 +49,110 @@ export class AccordionEditor extends Component {
     this.setState( errors );
   }
 
+  // addAccRow(){
+  //   const {accordion_rows} = attributes;
 
+  //   if ( accordion_rows.length < 5 ) {
+  //     setAttributes({
+  //       accordion_rows: [...accordion_rows, {
+  //         accordion_id:'',
+  //         accordion_headline:'',
+  //         accordion_text:'',
+  //       }]
+  //     });
+  //   }
+
+  //   return <div>
+  //           <RichText
+  //           id={attributes.accordion_id}
+  //           className="accordion-headline"
+  //           placeholder={__('Enter the headline here for %s section', 'planet4-blocks-backend').replace('%s', index+1)}
+  //           value={attributes.accordion_headline}
+  //           onChange={this.toAttribute('accordion_headline')}
+  //           keepPlaceholderOnFocus={true}
+  //           />
+  //           </div>
+  // }
+
+  // removeAccRow() {
+  //   setAttributes({accordion_rows: attributes.accordion_rows.slice(0, -1) });
+  // }
+  
+
+  // getAccordionRows(accordion_rows) {
+    accordion_rows  (attributes)  {
+      let accordion_rows = [];
+      if (attributes.accordion_headline.headline_1) {
+        let accordion_row = {
+          accordion_id: attributes.id_1,
+          accordion_headline: attributes.headline_1,
+          accordion_text: attributes.text_1 || '',
+          accordion_btn_text: attributes.btn_text_1,
+          accordion_btn_url: attributes.btn_url_1
+        };
+        accordion_rows.push(Object.assign({}, accordion_row));
+      }
+
+      if (attributes.accordion_headline.headline_2) {
+        let accordion_row = {
+          accordion_id: attributes.id_2,
+          accordion_headline: attributes.headline_2,
+          accordion_text: attributes.text_2 || '',
+          accordion_btn_text: attributes.btn_text_2,
+          accordion_btn_url: attributes.btn_url_2
+        };
+        accordion_rows.push(Object.assign({}, accordion_row));
+      }
+
+      if (attributes.accordion_headline.headline_3) {
+        let accordion_row = {
+          accordion_id: attributes.id_3,
+          accordion_headline: attributes.headline_3,
+          accordion_text: attributes.text_3 || '',
+          accordion_btn_text: attributes.btn_text_3,
+          accordion_btn_url: attributes.btn_url_3
+        };
+        accordion_rows.push(Object.assign({}, accordion_row));
+      }
+
+      if (attributes.accordion_headline.headline_4) {
+        let accordion_row = {
+          accordion_id: attributes.id_4,
+          accordion_headline: attributes.headline_4,
+          accordion_text: attributes.text_4 || '',
+          accordion_btn_text: attributes.btn_text_4,
+          accordion_btn_url: attributes.btn_url_4
+        };
+        accordion_rows.push(Object.assign({}, accordion_row));
+
+
+      }
+
+      if (attributes.accordion_headline.headline_5) {
+        let accordion_row = {
+          accordion_id: attributes.id_5,
+          accordion_headline: attributes.headline_5,
+          accordion_text: attributes.text_5 || '',
+          accordion_btn_text: attributes.btn_text_5,
+          accordion_btn_url: attributes.btn_url_5
+        };
+        accordion_rows.push(Object.assign({}, accordion_row));
+
+      }
+
+      return accordion_rows;
+    };
+    // return accordion_rows;
+  // }
 
   //renders the settings
   renderEdit() {
     const { attributes } = this.props;
-    let { accordion_rows } = attributes;
 
-    accordion_rows = (attributes) => {
-      let accordion_rows = [];
-      if (attributes.accordion_headline.headline_1){
-        let accordion_row = {
-          accordion_headline: attributes.headline_1,
-          accordion_text: attributes.text_1 || ''
-        };
-        accordion_rows.push(Object.assign({}, accordion_row));
 
-        if (attributes.accordion_headline.headline_2){
-          let accordion_row = {
-            accordion_headline: attributes.headline_2,
-            accordion_text: attributes.text_2 || ''
-          };
-          accordion_rows.push(Object.assign({}, accordion_row));
+    // let { accordion_rows } = attributes;
 
-          if (attributes.accordion_headline.headline_3){
-            let accordion_row = {
-              accordion_headline: attributes.headline_3,
-              accordion_text: attributes.text_3 || ''
-            };
-            accordion_rows.push(Object.assign({}, accordion_row));
-
-            if (attributes.accordion_headline.headline_4){
-              let accordion_row = {
-                accordion_headline: attributes.headline_4,
-                accordion_text: attributes.text_4 || ''
-              };
-              accordion_rows.push(Object.assign({}, accordion_row));
-
-              if (attributes.accordion_headline.headline_5){
-                let accordion_row = {
-                  accordion_headline: attributes.headline_5,
-                  accordion_text: attributes.text_5 || ''
-                };
-                accordion_rows.push(Object.assign({}, accordion_row));
-                
-              }
-            }
-          }
-        }
-      }
-      return accordion_rows;
-    }
+    // accordion_rows = this.getAccordionRows(accordion_rows);
 
     return (
       <Fragment>
@@ -94,14 +163,45 @@ export class AccordionEditor extends Component {
             </div>
           </PanelBody>
         </InspectorControls>
+
+        {/*
+        {[accordion_rows].map((item, index) => {
+          return (
+            <div key={index}>
+               { !item.accordion_headline && !item.accordion_text &&
+                <div><b>{__('Please provide a title or a description for this accordion row to be displayed.', 'planet4-blocks-backend')}</b></div>
+              } 
+
+            </div>
+          );
+        })}
+      */}
       </Fragment>
     ); 
   }
+
 
 //renders the editor view
   renderView() {
     const { attributes, className } = this.props;
     console.log(  "Attributes are: " +  this.props.name );
+
+    let { accordion_rows } = attributes;
+    // accordion_rows = this.getAccordionRows(accordion_rows);
+
+    {/* Toggle panelsaccordion */}
+    // let acc = document.getElementsByClassName('accordion');
+    // for (let p = 0; p < acc.length; p++) {
+    //   acc[p].addEventListener("click", function() {
+    //     this.classList.toggle("active");
+    //         let panel = this.nextElementSibling;
+    //           panel.style.display === "block" ? panel.style.display = "none" : panel.style.display = "block";
+
+    //   });
+
+    // }
+
+
 
     return <Fragment>
         <section>
@@ -118,54 +218,105 @@ export class AccordionEditor extends Component {
                 characterLimit={100}
                 multiline="false"
               />
-            
-            <RichText
-              tagName="p"
-              className="page-section-description"
-              placeholder={__('Enter description here', 'planet4-blocks-backend')}
-              value={attributes.accordion_description}
-              onChange={this.toAttribute('accordion_description')}
-              keepPlaceholderOnFocus={true}
-              withoutInteractiveFormatting
-              characterLimit={400}
-              multiline="false"
-            />
+              <RichText
+                tagName="p"
+                className="page-section-description"
+                placeholder={__('Enter description here', 'planet4-blocks-backend')}
+                value={attributes.accordion_description}
+                onChange={this.toAttribute('accordion_description')}
+                keepPlaceholderOnFocus={true}
+                withoutInteractiveFormatting
+                characterLimit={400}
+                multiline="false"
+              />
             </header>
-            <div className="accordion-content my-2">
-              <header className="accordion active">
-                <RichText
-                  tagName="h4"
-                  className="accordion-headline"
-                  placeholder={__('Enter the headline here for the section', 'planet4-blocks-backend')}
-                  value={attributes.accordion_headline}
-                  onChange={this.toAttribute('accordion_headline')}
-                  keepPlaceholderOnFocus={true}
-                  withoutInteractiveFormatting
-                  // characterLimit={100}
-                  multiline="false"
-                /> 
-              </header>
-              <div className="panel"> 
-                <RichText
-                  tagName="p"
-                  className="accordion-text"
-                  placeholder={__('Enter some text here.. ', 'planet4-blocks-backend')}
-                  value={attributes.accordion_text}
-                  onChange={this.toAttribute('accordion_text')}
-                  keepPlaceholderOnFocus={true}
-                  multiline="P"
-                />
-                {/* <button className="btn btn-secondary btn-accordion">
-                  Read More
-                </button> */}
-              </div>
+
+            {[accordion_rows].map((index) => {
+              return (
+                <div key={index+1}>
+                  <div className="accordion-content my-2">
+                    <div className="accordion card-header"
+                        onClick={this.handleCollapseClick}
+                        // id={attributes.accordion_id, index+1}
+                        >
+                      <RichText
+                        // label={__('Row %s: Header', 'planet4-blocks-backend').replace('%s', index+1)}
+                        tagName="h4"
+                        className="accordion-headline"
+                        placeholder={__('Enter the headline here for %s section', 'planet4-blocks-backend').replace('%s', index+1)}
+                        value={attributes.accordion_headline}
+                        onChange={this.toAttribute('accordion_headline')}
+                        keepPlaceholderOnFocus={true}
+                        withoutInteractiveFormatting
+                        // characterLimit={100}
+                        multiline="false"
+                      /> 
+                    </div>
+                    <div className="panel"> 
+                      <RichText
+                        // id={attributes.accordion_id, index+1}
+                        tagName="p"
+                        className="accordion-text"
+                        placeholder={__('Enter the %s text here.. ', 'planet4-blocks-backend').replace('%s', index+1)}
+                        value={attributes.accordion_text}
+                        onChange={this.toAttribute('accordion_text')}
+                        keepPlaceholderOnFocus={true}
+                        multiline="P"
+                      />
+                      {/* <Button className="btn btn-secondary btn-accordion"
+                      placeholder={__('Enter the %s text here.. ', 'planet4-blocks-backend').replace('%s', index+1)}
+
+                    /> */}
+                    <Tooltip text={__('Edit text', 'planet4-blocks-backend')}>
+                      <div className="btn btn-secondary btn-block">
+                        <RichText
+                          tagName="div"
+                          placeholder={__('Enter text', 'planet4-blocks-backend')}
+                          value={attributes.accordion_btn_text}
+                          // onChange={toAttribute('accordion_btn_text')}
+                          keepPlaceholderOnFocus={true}
+                          withoutInteractiveFormatting
+                          multiline="false"
+                        />
+                      </div>
+                    </Tooltip>
+                    </div>
+                  </div>
+                  
+                </div>
+              );
+            })}
+            <div className="container"> 
+              { accordion_rows.length < 5 && (
+                <Tooltip text={__('Add Row', 'planet4-blocks-backend')}>
+                  <button
+                    className={
+                      "btn btn-outline-secondary btn-sm btn-mnml"
+                    }
+                    onClick={this.props.addAccRow}
+                  >
+                    {__('Add Row', 'planet4-blocks-backend')} <Dashicon icon={"plus"} size={12} />
+                  </button>
+                </Tooltip>
+              )}
+
+              { accordion_rows.length > 0 && (
+                <Tooltip text={__('Remove Row', 'planet4-blocks-backend')}>
+                  <button
+                    className={ "btn btn-outline-secondary btn-sm btn-mnml" }
+                    onClick={this.props.removeAccRow}
+                  >
+                    {__('Remove Row', 'planet4-blocks-backend')} <Dashicon icon={"minus"} size={12} />
+                  </button>
+                </Tooltip>
+              )}
             </div>
-          
           </div>
         </section>
 
         <AccordionFrontend isEditing {...attributes} />
       </Fragment>;
+  
   }
 
 

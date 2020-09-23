@@ -25,25 +25,29 @@ export class AccordionBlock {
         type: 'array',
         default: [],
         selector: '.accordion-content',
-            },  
-        accordion_headline: {
-          type: 'string',
-          default: '',
-          selector: '.accordion-headline',
-        },
-        accordion_text: {
-          type: 'string',
-          default: '',
-          selector: '.accordion-text'
-        },
-
-      // accordion_open: {
-      //   type: 'boolean',
-      //   default: false,
-      //   source: 'attribute',
-      //   selector: 'button',
-      //   attribute: 'collapse'
-      // },
+      },  
+      accordion_id: {
+        type: 'integer',
+        default: 1,
+      },
+      accordion_headline: {
+        type: 'string',
+        default: '',
+        selector: '.accordion-headline',
+      },
+      accordion_text: {
+        type: 'string',
+        default: '',
+        selector: '.accordion-text',
+      },
+      accordion_btn_text: {
+        type: 'string',
+        default: '',
+      },
+      accordion_btn_url: {
+        type: 'url',
+        default: '',
+      },
      
         // accordion_icon: {
         //   type: 'string',
@@ -77,10 +81,33 @@ export class AccordionBlock {
         }
       ],
       edit: ( { isSelected, attributes, setAttributes } ) => {
+        
+        function addAccRow(){
+          const {accordion_rows} = attributes;
+      
+          if ( accordion_rows.length < 5 ) {
+            setAttributes({
+              accordion_rows: [...accordion_rows, {
+                accordion_id:'',
+                accordion_headline:'',
+                accordion_text:'',
+                accordion_btn_text:'',
+                accordion_btn_url:'',
+              }]
+            });
+          }
+        }
+
+        function removeAccRow() {
+          setAttributes({accordion_rows: attributes.accordion_rows.slice(0, -1) });
+        }
+      
         return <AccordionEditor
           attributes={attributes}
           setAttributes={setAttributes}
           isSelected={ isSelected }
+          addAccRow={addAccRow}
+          removeAccRow={removeAccRow}
         />
       },
       save: frontendRendered( BLOCK_NAME )
