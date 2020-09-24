@@ -14,79 +14,56 @@ export class AccordionFrontend extends Component {
     this.handleCollapseClick = this.handleCollapseClick.bind(this);
     this.handleReadMoreClick = this.handleReadMoreClick.bind(this);
     this.onChangeContent = this.onChangeContent.bind(this);
-
   }
-  
-
-  handleCollapseClick() { 
-    // const acc = this._acc.children;
-    // for (let i = 0; i < acc.length; i++) {
-    //   let a = acc[i];
-    //   a.onclick = () => a.classList.toggle("active");
-    // }
-    this.setState(state => ({      
-      isToggleOn: !state.isToggleOn     
-    })); 
-
-    
-      window.onclick = e => {
-          // console.log(e.target); // to get the element
-          console.log($(e.target).text());
-
-          let label = $(e.target).text();
-          // $(".accordion_headline").one("click", function(event) {
-          //   event.preventDefault();
-          // });
-
-          if (this.state.isToggleOn === false) {
-
-            // $('.panel').css('display', 'none'); 
-            $('.panel').addClass('visibility');
-
-            dataLayer.push({
-              'event': 'Close FAQ',
-              'Question': label
-            });
-          
-            
-          } else {
-           // const panel = $('.accordion').next($('.panel'));
-           $('.panel').removeClass('visibility');
-
-           dataLayer.push({
-             'event': 'Expand FAQ',
-             'Question': label
-           });
-
-          }
-      //   let accordion_headline = $('.accordion_headline');
-      // let label = 
-      // this.props.accordion_headline.name.toString();
-
-          
-      }
-      
-      // this.state.isToggleOn ? panel.css('display', 'block') : panel.css('display', 'none');       
-       // panel.style.display === "block" ? panel.style.display = "none" : panel.style.display = "block";
  
+// {/* Toggle panels accordion - bug event opens all on click */}
+handleCollapseClick() {
+  // const acc = this._acc.children;
+  // for (let i = 0; i < acc.length; i++) {
+  //   let a = acc[i];
+  //   a.onclick = () => a.classList.toggle("active");
+  // }
+  this.setState(state => ({
+    isToggleOn: !state.isToggleOn
+  }));
+
+  window.onclick = e => {
+    // console.log($(e.target).text());
+    let txt = $(e.target).text().substring(0, 50) + '...';
+    if (this.state.isToggleOn === false) {
+      $('.panel').addClass('visibility');
+      $('.accordion-headline:before').addClass('rotate');
+      dataLayer.push({
+        'event': 'Close FAQ',
+        'Question': txt
+      });
+
+    } else {
+      // const panel = $('.accordion').next($('.panel'));
+      $('.panel').removeClass('visibility');
+      $('.accordion-headline:before').removeClass('rotate');
+      dataLayer.push({
+        'event': 'Expand FAQ',
+        'Question': txt
+      });
+
+    }
 
   }
+}
 
-  handleReadMoreClick(){
+  handleReadMoreClick() {
     window.onclick = e => {
-
-      console.log($(e.target).text());
-
-      let btnRead = $(e.target).text();
+      let btnRead = $(e.target.parentNode).text().substring(0, 50) + '...';
+      // console.log($(e.target.parentNode).text(btnRead));
       dataLayer.push({
         'event': 'Read More FAQ',
         'Question': btnRead
-      }); 
-  }
+      });
+    }
 
-     
-  }
 
+  }
 
   componentDidMount() {
     // Rendering component`s values depending on props
@@ -106,19 +83,21 @@ export class AccordionFrontend extends Component {
     console.log("component Did UnMount OK");
     console.log(this._isMounted);
     this.handleCollapseClick();
+    this.handleReadMoreClick();
 
 
   }
   
   componentDidUpdate() {
-
+    
     console.log("componentDidUpdate OK");
   }
 
   onChangeContent() {
     console.log("onChangeContent OK");
 
-
+    this.handleCollapseClick();
+    this.handleReadMoreClick();
   }
 
 
@@ -131,7 +110,8 @@ export class AccordionFrontend extends Component {
       accordion_id,
       accordion_headline,
       accordion_text,
-      accordion_open,
+      accordion_btn_text,
+      accordion_btn_url,
       isEditing,
     } = this.props;
 
@@ -145,7 +125,7 @@ export class AccordionFrontend extends Component {
     // let accordionClassName = `block accordion-block my-1 accordion-style-${style}`;
     // if (isEditing) accordionClassName += ` editing`;
 
-    {/* Toggle panelsaccordion */}
+    {/* Toggle panelsaccordion - bug event opens on second click */}
       // let acc = document.getElementsByClassName('accordion');
       // let p;
       // for (p = 0; p < acc.length; p++) {
@@ -161,19 +141,10 @@ export class AccordionFrontend extends Component {
       // }
 
 
-    // document.querySelector('.accordion-content').addEventListener('click', event => {
-    //  let panel = $(this).find('.panel');
-    //  panel.style.display === "block" ? panel.style.display = "none" : panel.style.display = "block";
-    // })
-
-    
-
-    
-
     return (
       
       <Fragment>
-        <section className="block accordion-block my-3">
+        <section className="block accordion-block my-0 py-0">
             <header>
               {accordion_title && !isEditing &&
                 <h2 className="page-section-header">{accordion_title}</h2>
@@ -183,7 +154,7 @@ export class AccordionFrontend extends Component {
               }
             </header>
 
-            <div className="accordion-content my-2">
+            <div className="accordion-content my-0 py-0">
               <header className="accordion" 
               onClick={this.handleCollapseClick}
               > 
@@ -197,11 +168,16 @@ export class AccordionFrontend extends Component {
                 {accordion_text && !isEditing &&
                   <p className="accordion-text" dangerouslySetInnerHTML={{ __html: accordion_text }} />
                 }
+                {accordion_btn_text && !isEditing && 
+                // accordion_btn_url
                 <button className="btn btn-secondary btn-accordion" 
                 // name={this.accordion_headline} 
-                onClick={this.handleReadMoreClick}> 
-                  Read More
+                onClick={this.handleReadMoreClick} 
+                // href={accordion_btn_url}
+                > 
+                  {accordion_btn_text}
                 </button>
+                }
               </div>
           </div>
         </section>
