@@ -55,7 +55,6 @@ handleCollapseClick() {
   handleReadMoreClick() {
     window.onclick = e => {
       let btnRead = $(e.target.parentNode).text().substring(0, 50) + '...';
-      // console.log($(e.target.parentNode).text(btnRead));
       dataLayer.push({
         'event': 'Read More FAQ',
         'Question': btnRead
@@ -158,26 +157,23 @@ handleCollapseClick() {
               <header className="accordion" 
               onClick={this.handleCollapseClick}
               > 
-              {/* {this.state.isToggleOn ? panel.style.display = "none" : panel.style.display = "block"}   */}
                 {accordion_headline && !isEditing &&
                   <h4 className="accordion-headline" name={accordion_headline}>{accordion_headline}</h4>
                 }
               </header>
-              {/* {isVisible && <MyElement/>} */}
               <div className="panel visibility">
                 {accordion_text && !isEditing &&
                   <p className="accordion-text" dangerouslySetInnerHTML={{ __html: accordion_text }} />
                 }
                 {accordion_btn_text && !isEditing && 
                 // accordion_btn_url
-                <button className="btn btn-secondary btn-accordion" 
-                // name={this.accordion_headline} 
-                onClick={this.handleReadMoreClick} 
-                // href={accordion_btn_url}
-                > 
-                  {accordion_btn_text}
-                </button>
-                }
+                  <button className="btn btn-secondary btn-accordion" 
+                  onClick={this.handleReadMoreClick}  
+                  // href={accordion_btn_url}
+                  > 
+                    {accordion_btn_text}
+                  </button>
+                  }
               </div>
           </div>
         </section>

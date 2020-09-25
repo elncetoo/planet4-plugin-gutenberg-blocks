@@ -188,8 +188,8 @@ export class AccordionEditor extends Component {
             <header>
               <RichText
                 tagName="h2"
-                className="page-section-header"
-                placeholder={__('Enter title for this block (or leave empty to hide it on the front page).', 'planet4-blocks-backend')}
+                className="page-section-header mt-3"
+                placeholder={__('Enter title for the block or leave empty to hide it.', 'planet4-blocks-backend')}
                 value={attributes.accordion_title}
                 onChange={this.toAttribute('accordion_title')}
                 keepPlaceholderOnFocus={true}
@@ -200,7 +200,7 @@ export class AccordionEditor extends Component {
               <RichText
                 tagName="p"
                 className="page-section-description"
-                placeholder={__('Enter the description of the block (or leave empty to hide it on the front page).)', 'planet4-blocks-backend')}
+                placeholder={__('Enter the description of the block or leave empty to hide it on the front page.', 'planet4-blocks-backend')}
                 value={attributes.accordion_description}
                 onChange={this.toAttribute('accordion_description')}
                 keepPlaceholderOnFocus={true}
@@ -210,19 +210,19 @@ export class AccordionEditor extends Component {
               />
             </header>
 
-            {[accordion_rows].map((index) => {
+            {[accordion_rows].map((accordion_row, index) => {
               return (
                 <div key={index}>
                   <div className="accordion-content my-2">
                     <div className="accordion card-header"
                         onClick={this.handleCollapseClick}
-                        // id={attributes.accordion_id, index+1}
+                        id={attributes.accordion_id, index+1}
                         >
                       <RichText
-                        // label={__('Row %s: Header', 'planet4-blocks-backend').replace('%s', index+1)}
+                        label={__('Row %s: Header', 'planet4-blocks-backend')}
                         tagName="h4"
                         className="accordion-headline"
-                        placeholder={__('Enter the headline here for %s section', 'planet4-blocks-backend').replace('%s', index+1)}
+                        placeholder={__('Write title for the block here', 'planet4-blocks-backend')}
                         value={attributes.accordion_headline}
                         onChange={this.toAttribute('accordion_headline')}
                         keepPlaceholderOnFocus={true}
@@ -236,20 +236,19 @@ export class AccordionEditor extends Component {
                         // id={attributes.accordion_id, index+1}
                         tagName="p"
                         className="accordion-text"
-                        placeholder={__('Enter the %s text here.. ', 'planet4-blocks-backend').replace('%s', index+1)}
+                        placeholder={__('Enter description here', 'planet4-blocks-backend')}
                         value={attributes.accordion_text}
                         onChange={this.toAttribute('accordion_text')}
                         keepPlaceholderOnFocus={true}
-                        // multiline="p"
                       />
-                    <Tooltip text={__('Add the button text (or leave it empty if you want to hide the button on the front page.)', 'planet4-blocks-backend')}>
+                    <Tooltip text={__('Add button text or leave empty to hide it on the front page.', 'planet4-blocks-backend')}>
                       <div className="btn btn-secondary btn-block">
                         <RichText
                           tagName="div"
-                          placeholder={__('Add button text (or leave empty to hide it)', 'planet4-blocks-backend')}
+                          placeholder={__('Add button text or leave empty to hide it.', 'planet4-blocks-backend')}
                           value={attributes.accordion_btn_text}
                           // href={attributes.accordion_btn_url}
-                          onChange={  this.toAttribute('accordion_btn_text') }
+                          onChange={ this.toAttribute('accordion_btn_text') }
                           keepPlaceholderOnFocus={true}
                           withoutInteractiveFormatting
                           multiline="false"

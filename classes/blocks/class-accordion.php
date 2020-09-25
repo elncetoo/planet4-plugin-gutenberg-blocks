@@ -47,7 +47,7 @@ namespace P4GBKS\Blocks;
                     'accordion_rows'         => [
                             'type'    => 'array',
                             'default' =>  [],
-                            'items'   => [
+                            'accordion_row'   => [
                                 'type'       => 'object',
                                 // In JSON Schema you can specify object properties in the properties attribute.
                                 'properties' => [
