@@ -96,15 +96,7 @@ class Accordion extends Base_Block {
 
 		];
 
-        // Only show rows that have a title or a description.
-		// $accordion_rows = array_filter(
-		// 	$attributes['accordion_rows'],
-		// 	static function ( array $accordion_row ) {
-		// 		return ! empty( $accordion_row['accordion_headline'] ) || ! empty( $accordion_row['accordion_text'] );
-		// 	}
-		// );
-
-        $accordion_rows = array_slice( $accordion_rows, 0, self::MAX_ROWS );
+		$accordion_rows = array_slice( $accordion_rows, 0, self::MAX_ROWS );
 
 		$number_accordion_rows = count( $accordion_rows );
 
