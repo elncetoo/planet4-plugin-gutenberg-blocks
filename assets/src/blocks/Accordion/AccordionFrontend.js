@@ -15,7 +15,7 @@ export class AccordionFrontend extends Component {
     this.handleReadMoreClick = this.handleReadMoreClick.bind(this);
     this.onChangeContent = this.onChangeContent.bind(this);
   }
- 
+
 // {/* Toggle panels accordion - bug event opens all on click */}
 handleCollapseClick() {
   // const acc = this._acc.children;
@@ -86,9 +86,9 @@ handleCollapseClick() {
 
 
   }
-  
+
   componentDidUpdate() {
-    
+
     console.log("componentDidUpdate OK");
   }
 
@@ -114,7 +114,7 @@ handleCollapseClick() {
       isEditing,
     } = this.props;
 
-      
+
    {/* Change styles */}
     // let style = this.props.style || 'minimal'; // Needed to convert existing blocks
     // if (className) {
@@ -124,7 +124,7 @@ handleCollapseClick() {
     // let accordionClassName = `block accordion-block my-1 accordion-style-${style}`;
     // if (isEditing) accordionClassName += ` editing`;
 
-    {/* Toggle panelsaccordion - bug event opens on second click */}
+    {/* Toggle panels accordion - bug event opens on second click because of the double onclick event */}
       // let acc = document.getElementsByClassName('accordion');
       // let p;
       // for (p = 0; p < acc.length; p++) {
@@ -133,15 +133,15 @@ handleCollapseClick() {
       //         let panel = this.nextElementSibling;
       //           panel.style.display === "block" ? panel.style.display = "none" : panel.style.display = "block";
 
-      //           // panel.style.visibility === "hidden" &&  panel.style.opacity === "0" 
-      //           // ? panel.style.visibility === "visible" &&  panel.style.opacity === "1" 
+      //           // panel.style.visibility === "hidden" &&  panel.style.opacity === "0"
+      //           // ? panel.style.visibility === "visible" &&  panel.style.opacity === "1"
       //           // : panel.style.visibility === "hidden" &&  panel.style.opacity === "0";
       //   });
       // }
 
 
     return (
-      
+
       <Fragment>
         <section className="block accordion-block my-0 py-0">
             <header>
@@ -154,9 +154,9 @@ handleCollapseClick() {
             </header>
 
             <div className="accordion-content my-0 py-0">
-              <header className="accordion" 
+              <header className="accordion"
               onClick={this.handleCollapseClick}
-              > 
+              >
                 {accordion_headline && !isEditing &&
                   <h4 className="accordion-headline" name={accordion_headline}>{accordion_headline}</h4>
                 }
@@ -165,12 +165,12 @@ handleCollapseClick() {
                 {accordion_text && !isEditing &&
                   <p className="accordion-text" dangerouslySetInnerHTML={{ __html: accordion_text }} />
                 }
-                {accordion_btn_text && !isEditing && 
+                {accordion_btn_text && !isEditing &&
                 // accordion_btn_url
-                  <button className="btn btn-secondary btn-accordion" 
-                  onClick={this.handleReadMoreClick}  
+                  <button className="btn btn-secondary btn-accordion"
+                  onClick={this.handleReadMoreClick}
                   // href={accordion_btn_url}
-                  > 
+                  >
                     {accordion_btn_text}
                   </button>
                   }

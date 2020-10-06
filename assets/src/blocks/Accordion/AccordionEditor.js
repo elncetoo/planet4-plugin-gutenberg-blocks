@@ -23,10 +23,10 @@ export class AccordionEditor extends Component {
 
   }
 
-  handleCollapseClick() { 
-    this.setState(state => ({      
-    isToggleOn: !state.isToggleOn    
-    }));  
+  handleCollapseClick() {
+    this.setState(state => ({
+    isToggleOn: !state.isToggleOn
+    }));
 
     this.state.isToggleOn === true ?  $('.panel').removeClass('visibility') :  $('.panel').addClass('visibility');
   }
@@ -43,99 +43,102 @@ export class AccordionEditor extends Component {
     this.setState( errors );
   }
 
-  // addAccRow(){
-  //   const {accordion_rows} = attributes;
+  /*
+  addAccRow(){
+    const {accordion_rows} = attributes;
 
-  //   if ( accordion_rows.length < 5 ) {
-  //     setAttributes({
-  //       accordion_rows: [...accordion_rows, {
-  //         accordion_id:'',
-  //         accordion_headline:'',
-  //         accordion_text:'',
-  //       }]
-  //     });
-  //   }
+    if ( accordion_rows.length < 5 ) {
+      setAttributes({
+        accordion_rows: [...accordion_rows, {
+          accordion_id:'',
+          accordion_headline:'',
+          accordion_text:'',
+        }]
+      });
+    }
 
-  //   return <div>
-  //           <RichText
-  //           id={attributes.accordion_id}
-  //           className="accordion-headline"
-  //           placeholder={__('Enter the headline here for %s section', 'planet4-blocks-backend').replace('%s', index+1)}
-  //           value={attributes.accordion_headline}
-  //           onChange={this.toAttribute('accordion_headline')}
-  //           keepPlaceholderOnFocus={true}
-  //           />
-  //           </div>
-  // }
+    return <div>
+            <RichText
+            id={attributes.accordion_id}
+            className="accordion-headline"
+            placeholder={__('Enter the headline here for %s section', 'planet4-blocks-backend').replace('%s', index+1)}
+            value={attributes.accordion_headline}
+            onChange={this.toAttribute('accordion_headline')}
+            keepPlaceholderOnFocus={true}
+            />
+            </div>
+  }
 
-  // removeAccRow() {
-  //   setAttributes({accordion_rows: attributes.accordion_rows.slice(0, -1) });
-  // }
-  
-
-  // getAccordionRows(accordion_rows) {
-    // accordion_rows  (attributes)  {
-    //   let accordion_rows = [];
-    //   if (attributes.accordion_headline.headline_1) {
-    //     let accordion_row = {
-    //       accordion_id: attributes.id_1,
-    //       accordion_headline: attributes.headline_1,
-    //       accordion_text: attributes.text_1 || '',
-    //       accordion_btn_text: attributes.btn_text_1,
-    //       accordion_btn_url: attributes.btn_url_1
-    //     };
-    //     accordion_rows.push(Object.assign({}, accordion_row));
-    //   }
-
-    //   if (attributes.accordion_headline.headline_2) {
-    //     let accordion_row = {
-    //       accordion_id: attributes.id_2,
-    //       accordion_headline: attributes.headline_2,
-    //       accordion_text: attributes.text_2 || '',
-    //       accordion_btn_text: attributes.btn_text_2,
-    //       accordion_btn_url: attributes.btn_url_2
-    //     };
-    //     accordion_rows.push(Object.assign({}, accordion_row));
-    //   }
-
-    //   if (attributes.accordion_headline.headline_3) {
-    //     let accordion_row = {
-    //       accordion_id: attributes.id_3,
-    //       accordion_headline: attributes.headline_3,
-    //       accordion_text: attributes.text_3 || '',
-    //       accordion_btn_text: attributes.btn_text_3,
-    //       accordion_btn_url: attributes.btn_url_3
-    //     };
-    //     accordion_rows.push(Object.assign({}, accordion_row));
-    //   }
-
-    //   if (attributes.accordion_headline.headline_4) {
-    //     let accordion_row = {
-    //       accordion_id: attributes.id_4,
-    //       accordion_headline: attributes.headline_4,
-    //       accordion_text: attributes.text_4 || '',
-    //       accordion_btn_text: attributes.btn_text_4,
-    //       accordion_btn_url: attributes.btn_url_4
-    //     };
-    //     accordion_rows.push(Object.assign({}, accordion_row));
+  removeAccRow() {
+    setAttributes({accordion_rows: attributes.accordion_rows.slice(0, -1) });
+  }
 
 
-    //   }
+  getAccordionRows(accordion_rows) {
+    accordion_rows  (attributes)  {
+      let accordion_rows = [];
+      if (attributes.accordion_headline.headline_1) {
+        let accordion_row = {
+          accordion_id: attributes.id_1,
+          accordion_headline: attributes.headline_1,
+          accordion_text: attributes.text_1 || '',
+          accordion_btn_text: attributes.btn_text_1,
+          accordion_btn_url: attributes.btn_url_1
+        };
+        accordion_rows.push(Object.assign({}, accordion_row));
+      }
 
-    //   if (attributes.accordion_headline.headline_5) {
-    //     let accordion_row = {
-    //       accordion_id: attributes.id_5,
-    //       accordion_headline: attributes.headline_5,
-    //       accordion_text: attributes.text_5 || '',
-    //       accordion_btn_text: attributes.btn_text_5,
-    //       accordion_btn_url: attributes.btn_url_5
-    //     };
-    //     accordion_rows.push(Object.assign({}, accordion_row));
+      if (attributes.accordion_headline.headline_2) {
+        let accordion_row = {
+          accordion_id: attributes.id_2,
+          accordion_headline: attributes.headline_2,
+          accordion_text: attributes.text_2 || '',
+          accordion_btn_text: attributes.btn_text_2,
+          accordion_btn_url: attributes.btn_url_2
+        };
+        accordion_rows.push(Object.assign({}, accordion_row));
+      }
 
-    //   }
+      if (attributes.accordion_headline.headline_3) {
+        let accordion_row = {
+          accordion_id: attributes.id_3,
+          accordion_headline: attributes.headline_3,
+          accordion_text: attributes.text_3 || '',
+          accordion_btn_text: attributes.btn_text_3,
+          accordion_btn_url: attributes.btn_url_3
+        };
+        accordion_rows.push(Object.assign({}, accordion_row));
+      }
 
-    //   return accordion_rows;
-    // };
+      if (attributes.accordion_headline.headline_4) {
+        let accordion_row = {
+          accordion_id: attributes.id_4,
+          accordion_headline: attributes.headline_4,
+          accordion_text: attributes.text_4 || '',
+          accordion_btn_text: attributes.btn_text_4,
+          accordion_btn_url: attributes.btn_url_4
+        };
+        accordion_rows.push(Object.assign({}, accordion_row));
+
+
+      }
+
+      if (attributes.accordion_headline.headline_5) {
+        let accordion_row = {
+          accordion_id: attributes.id_5,
+          accordion_headline: attributes.headline_5,
+          accordion_text: attributes.text_5 || '',
+          accordion_btn_text: attributes.btn_text_5,
+          accordion_btn_url: attributes.btn_url_5
+        };
+        accordion_rows.push(Object.assign({}, accordion_row));
+
+      }
+
+      return accordion_rows;
+    }
+
+    */
 
 
   //renders the settings
@@ -152,7 +155,7 @@ export class AccordionEditor extends Component {
         <InspectorControls>
           <PanelBody title={__('Settings', 'planet4-blocks-backend')}>
             <div>
-              <p> Settings are showing OK. </p>
+              <p> Accordion Block. </p>
             </div>
           </PanelBody>
         </InspectorControls>
@@ -163,14 +166,14 @@ export class AccordionEditor extends Component {
             <div key={index}>
                { !item.accordion_headline && !item.accordion_text &&
                 <div><b>{__('Please provide a title or a description for this accordion row to be displayed.', 'planet4-blocks-backend')}</b></div>
-              } 
+              }
 
             </div>
           );
         })}
       */}
       </Fragment>
-    ); 
+    );
   }
 
 
@@ -229,9 +232,9 @@ export class AccordionEditor extends Component {
                         withoutInteractiveFormatting
                         // characterLimit={100}
                         multiline="false"
-                      /> 
+                      />
                     </div>
-                    <div className="panel"> 
+                    <div className="panel">
                       <RichText
                         // id={attributes.accordion_id, index+1}
                         tagName="p"
@@ -257,11 +260,11 @@ export class AccordionEditor extends Component {
                     </Tooltip>
                     </div>
                   </div>
-                  
+
                 </div>
               );
             })}
-            {/* <div className="container"> 
+            {/* <div className="container">
               { accordion_rows.length < 5 && (
                 <Tooltip text={__('Add Row', 'planet4-blocks-backend')}>
                   <button
@@ -291,7 +294,7 @@ export class AccordionEditor extends Component {
 
         <AccordionFrontend isEditing {...attributes} />
       </Fragment>;
-  
+
   }
 
 
