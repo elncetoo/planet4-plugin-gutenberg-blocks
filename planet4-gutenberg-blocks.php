@@ -109,7 +109,6 @@ const POST_BLOCK_TYPES = [
 	'planet4-blocks/take-action-boxout',
 	'planet4-blocks/spreadsheet',
 	'planet4-blocks/timeline',
-	
 ];
 
 // pages allow all block types.

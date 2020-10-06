@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { AccordionEditor } from './AccordionEditor';
 import { frontendRendered } from '../frontendRendered';
 import { CSS_VARIABLES_ATTRIBUTE } from '../CssVariablesAttribute';
@@ -25,7 +26,7 @@ export class AccordionBlock {
         type: 'array',
         default: [],
         selector: '.accordion-content',
-      },  
+      },
       accordion_id: {
         type: 'integer',
         default: 1,
@@ -48,16 +49,15 @@ export class AccordionBlock {
         type: 'url',
         default: '',
       },
-     
-        // accordion_icon: {
-        //   type: 'string',
-        //   default: '',
-        //   selector: '.accordion-icon'
-        // },
-        // accordion_style: { // Needed to convert existing blocks
-        //   type: 'string',
-        //   default: ''
-        // },
+      // accordion_icon: {
+      //   type: 'string',
+      //   default: '',
+      //   selector: '.accordion-icon'
+      // },
+      // accordion_style: { // Needed to convert existing blocks
+      //   type: 'string',
+      //   default: ''
+      // },
 
       // },
       // css_variables: CSS_VARIABLES_ATTRIBUTE,
@@ -81,10 +81,10 @@ export class AccordionBlock {
         }
       ],
       edit: ( { isSelected, attributes, setAttributes } ) => {
-        
+
         function addAccRow(){
           const {accordion_rows} = attributes;
-      
+
           if ( accordion_rows.length < 5 ) {
             setAttributes({
               accordion_rows: [...accordion_rows, {
@@ -101,19 +101,19 @@ export class AccordionBlock {
         function removeAccRow() {
           setAttributes({accordion_rows: attributes.accordion_rows.slice(0, -1) });
         }
-      
+
         return <AccordionEditor
           attributes={attributes}
           setAttributes={setAttributes}
           isSelected={ isSelected }
           addAccRow={addAccRow}
           removeAccRow={removeAccRow}
-        />
+        />;
       },
       save: frontendRendered( BLOCK_NAME )
     });
 
-    // Remove the default style since it's the same as "text only"
+    // Remove the default style since it's the same as "minimal"
     // unregisterBlockStyle(BLOCK_NAME, 'default');
 
     // // Add our custom styles
@@ -135,5 +135,5 @@ export class AccordionBlock {
     //     }
     //   ]
     // );
-  };
+  }
 }

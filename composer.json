@@ -18,7 +18,7 @@
   },
   "require": {},
   "scripts": {
-    "fixes": "vendor/bin/phpcbf",
-    "sniffs": "vendor/bin/phpcs"
+    "fixes": "vendor/squizlabs/php_codesniffer/bin/phpcbf",
+    "sniffs": "vendor/squizlabs/php_codesniffer/bin/phpcs"
   }
 }

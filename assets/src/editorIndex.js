@@ -39,12 +39,12 @@ new MediaBlock();
 new SocialmediaBlock();
 new SocialMediaCardsBlock();
 new SplittwocolumnsBlock();
-new SpreadsheetBlock()
+new SpreadsheetBlock();
 new SubmenuBlock();
 new SubPagesBlock();
 new TakeactionboxoutBlock();
 new TimelineBlock();
-new ENFormBlock()
+new ENFormBlock();
 
 addBlockFilters();
 addSubAndSuperscript( window.wp );
