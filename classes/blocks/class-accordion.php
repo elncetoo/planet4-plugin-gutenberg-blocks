@@ -21,7 +21,6 @@ class Accordion extends Base_Block {
 	 * @const string BLOCK_NAME.
 	 */
 	const BLOCK_NAME = 'accordion';
-	const MAX_ROWS   = 5;
 
 	/**
 	 * Accordion constructor.
@@ -30,9 +29,8 @@ class Accordion extends Base_Block {
 		register_block_type(
 			'planet4-blocks-beta/accordion',
 			[
-				'editor_script'   => 'planet4-blocks-beta',
-				'render_callback' => [ $this, 'render' ],
-				'attributes'      => [
+				'editor_script' => 'planet4-blocks-beta',
+				'attributes'    => [
 					'accordion_title'       => [
 						'type'    => 'string',
 						'default' => '',
@@ -48,25 +46,33 @@ class Accordion extends Base_Block {
 							'type'       => 'object',
 							// In JSON Schema you can specify object properties in the properties attribute.
 							'properties' => [
-								'accordion_id'       => [
+								'accordion_id'        => [
 									'type'    => 'integer',
-									'default' => 1,
+									'default' => '',
 								],
-								'accordion_headline' => [
+								'accordion_headline'  => [
 									'type'    => 'string',
 									'default' => '',
 								],
-								'accordion_text'     => [
+								'accordion_text'      => [
 									'type'    => 'string',
 									'default' => '',
 								],
-								'accordion_btn_text' => [
+								'accordion_btn_text'  => [
 									'type'    => 'string',
 									'default' => '',
 								],
-								'accordion_btn_url'  => [
-									'type'    => 'url',
+								// 'accordion_btn_show' => [
+								// 'type'    => 'boolean',
+								// 'default' => false,
+								// ],
+								'accordion_btn_url'   => [
+									'type'    => 'string',
 									'default' => '',
+								],
+								'button_link_new_tab' => [
+									'type'    => 'boolean',
+									'default' => false,
 								],
 							],
 						],
@@ -92,17 +98,11 @@ class Accordion extends Base_Block {
 			'accordion_headline'    => $attributes['accordion_headline'] ?? '',
 			'accordion_text'        => $attributes['accordion_text'] ?? '',
 			'accordion_btn_text'    => $attributes['accordion_btn_text'] ?? '',
+			// 'accordion_btn_show'    => $attributes['accordion_btn_show'] ?? '',
 			'accordion_btn_url'     => $attributes['accordion_btn_url'] ?? '',
+			'button_link_new_tab'   => $attributes['button_link_new_tab'] ?? '',
 
 		];
-
-		$accordion_rows = array_slice( $accordion_rows, 0, self::MAX_ROWS );
-
-		$number_accordion_rows = count( $accordion_rows );
-
-		$fields['no_of_accordion_rows'] = $number_accordion_rows;
-
-		$fields['accordion_rows'] = $accordion_rows;
 
 		$block_data = [
 			'fields'              => $fields,

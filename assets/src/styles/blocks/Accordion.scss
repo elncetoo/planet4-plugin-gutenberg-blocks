@@ -54,7 +54,9 @@
           -webkit-transform: rotate(-45deg);
         }
 
-        &:hover:before {
+        &:hover:before,
+        &:active:before,
+        &:focus:before {
           transform: rotate(45deg);
           -webkit-transform: rotate(45deg);
           -moz-transform: rotate(45deg);
@@ -72,6 +74,7 @@
     }
 
     .panel {
+      // display: none;
       padding: .7rem 1.2rem;
       background-color: white;
       color: $black;
