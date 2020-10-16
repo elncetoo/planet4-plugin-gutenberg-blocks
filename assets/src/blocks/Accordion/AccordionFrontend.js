@@ -8,46 +8,11 @@ window.dataLayer = window.dataLayer || []
 export class AccordionFrontend extends Component {
   constructor (props) {
     super(props)
-
     this.state = {
-      accordions: [],
-      select: '',
-      isToggleOn: false
+      _isMounted: false
     }
-    this.handleCollapseClick = this.handleCollapseClick.bind(this)
     this.handleReadMoreClick = this.handleReadMoreClick.bind(this)
     this.onChangeContent = this.onChangeContent.bind(this)
-  }
-
-  // {/* Toggle panels accordion - bug event opens all on click */}
-  handleCollapseClick () {
-  // handleCollapseClick(index) {
-
-    this.setState(state => ({
-      isToggleOn: !state.isToggleOn
-    // select:this.state.accordions[index]
-    }))
-
-    window.onclick = e => {
-    // console.log($(e.target).text());
-      const txt = $(e.target).text().substring(0, 50) + '...'
-      if (this.state.isToggleOn === false) {
-        $('.panel').addClass('visibility')
-        $('.accordion-headline:before').toggleClass('rotate')
-        dataLayer.push({
-          event: 'Close FAQ',
-          Question: txt
-        })
-      } else {
-      // const panel = $('.accordion').next($('.panel'));
-        $('.panel').removeClass('visibility')
-        $('.accordion-headline:before').toggleClass('rotate')
-        dataLayer.push({
-          event: 'Expand FAQ',
-          Question: txt
-        })
-      }
-    }
   }
 
   handleReadMoreClick () {
@@ -61,43 +26,32 @@ export class AccordionFrontend extends Component {
   }
 
   componentDidMount () {
-    // Rendering component`s values depending on props
-    this._isMounted = true
-    return () => {
-      isMounted = false
-    }
-    this.handleCollapseClick()
     this.onChangeContent()
     console.log('component Did Mount OK')
     console.log(this._isMounted)
+    this._isMounted = true
+    return () => {
+      this._isMounted = false
+    }
   }
 
   componentWillUnmount () {
     this._isMounted = false
     console.log('component Did UnMount OK')
     console.log(this._isMounted)
-    this.handleCollapseClick()
     this.handleReadMoreClick()
-  }
-
-  componentDidUpdate () {
-    console.log('componentDidUpdate OK')
   }
 
   onChangeContent () {
     console.log('onChangeContent OK')
-
-    this.handleCollapseClick()
     this.handleReadMoreClick()
   }
 
   render () {
     const {
-      // className,
       accordion_title,
       accordion_description,
       accordion_rows,
-      // accordion_id,
       accordion_headline,
       accordion_text,
       // accordion_btn_show,
@@ -106,24 +60,41 @@ export class AccordionFrontend extends Component {
       button_link_new_tab,
       isEditing
     } = this.props
-    // const accordions = this.state.accordions;
 
-    { /* Toggle panels accordion - bug event opens on second click because of the double onclick event */ }
-    // let acc = document.getElementsByClassName('accordion');
-    // let p;
-    // for (p = 0; p < acc.length; p++) {
-    //   acc[p].addEventListener("click", function() {
-    //     this.classList.toggle("active");
-    //     let panel = this.nextElementSibling;
-    //     panel.style.display === "block" ? panel.style.display = "none" : panel.style.display = "block";
-    //     //panel.classList.contains('visibility') ? panel.remove('visibility') : panel.add('visibility');
-    //   });
-    // }
+    // Toggle panels accordion - bug event opens on second click because of the double onclick event
+    const acc = document.getElementsByClassName('accordion')
+
+    for (let p = 0; p < acc.length; p++) {
+      acc[p].addEventListener('click', function () {
+        this.classList.toggle('active')
+        const panel = this.nextElementSibling
+        if (panel.style.display === 'block') {
+          panel.style.display = 'none'
+          window.onclick = e => {
+            const txt = $(e.target).text().substring(0, 50) + '...'
+            $('.accordion-headline:before').removeClass('rotate')
+            dataLayer.push({
+              event: 'Close FAQ',
+              Question: txt
+            })
+          }
+        } else {
+          panel.style.display = 'block'
+          window.onclick = e => {
+            const txt = $(e.target).text().substring(0, 50) + '...'
+            $('.accordion-headline:before').addClass('rotate')
+            dataLayer.push({
+              event: 'Expand FAQ',
+              Question: txt
+            })
+          }
+        }
+      })
+    }
 
     return (
-
       <Fragment>
-
+        {accordion_rows && !isEditing &&
         <section className="block accordion-block my-0 py-0">
           <header>
             {accordion_title && !isEditing &&
@@ -133,19 +104,13 @@ export class AccordionFrontend extends Component {
           {accordion_description && !isEditing &&
             <p className="page-section-description" dangerouslySetInnerHTML={{ __html: accordion_description }} />
           }
-
-          {/* {accordions.map(index => */}
           <div className="accordion-content my-0 py-0">
-            <div className="accordion"
-            // onClick={this.handleCollapseClick(index)}
-              onClick={this.handleCollapseClick}
-            >
-              {this.state.isToggleOn ? <p>true</p> : <p>false</p>}
+            <div className="accordion">
               {accordion_headline && !isEditing &&
                 <h4 className="accordion-headline" name={accordion_headline}>{accordion_headline}</h4>
               }
             </div>
-            <div className="panel visibility">
+            <div className="panel" style={{ display: 'none' }}>
               {accordion_text && !isEditing &&
                 <p className="accordion-text" dangerouslySetInnerHTML={{ __html: accordion_text }} />
               }
@@ -154,16 +119,13 @@ export class AccordionFrontend extends Component {
                   onClick={this.handleReadMoreClick}
                   href={accordion_btn_url}
                   target={ button_link_new_tab ? '_blank' : '' }
-                >
-                  {accordion_btn_text}
+                > {accordion_btn_text}
                 </a>
               }
             </div>
           </div>
-          {/* )
-        } */}
         </section>
-
+        }
       </Fragment>
     )
   }

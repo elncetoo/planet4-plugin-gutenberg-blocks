@@ -10,20 +10,16 @@
     display: flex;
     flex-direction: column;
 
-    // &:hover+.panel {
-    //   display: block;
-    //   transition-timing-function: ease-out;
-    // }
+    &:hover+.panel {
+      display: block;
+      transition-timing-function: ease-out;
+    }
+
     .accordion {
       cursor: pointer;
       height: auto;
       position: relative;
-      // transition: all 2s linear;
-
-      // &:hover + .visibility {
-      //   visibility: visible;
-      //   opacity: 1;
-      // }
+      transition: all 2s linear;
 
       @include mobile-only {
         font-size: 1rem;
@@ -31,6 +27,7 @@
 
       .accordion-headline {
         background-color: $dark-blue;
+        display: block;
         color: $white;
         margin: 1rem 0 0;
         padding: .7rem 1rem .8rem 1.5rem;
@@ -52,6 +49,8 @@
           transition: transform 0.8s ease;
           transform: rotate(-45deg);
           -webkit-transform: rotate(-45deg);
+          -moz-transform: rotate(-45deg);
+          -ms-transform: rotate(-45deg);
         }
 
         &:hover:before,
@@ -60,7 +59,6 @@
           transform: rotate(45deg);
           -webkit-transform: rotate(45deg);
           -moz-transform: rotate(45deg);
-          -o-transform: rotate(45deg);
           -ms-transform: rotate(45deg);
         }
       }
@@ -74,16 +72,14 @@
     }
 
     .panel {
-      // display: none;
       padding: .7rem 1.2rem;
       background-color: white;
       color: $black;
       overflow: hidden;
-      transition: visibility 1s, opacity 1s, height 1s ease-in-out;
-      -webkit-transition: visibility 1s, opacity 1s, height 1s ease-in-out;
-      -moz-transition: all .3s ease .15s;
-      -o-transition: visibility 1s, opacity 1s, height 1s ease-in-out;
-      -ms-transition: visibility 1s, opacity 1s, height 1s ease-in-out;
+      transition: display 1s, opacity 1s, height 1s ease-in-out;
+      -webkit-transition: display 1s, opacity 1s, height 1s ease-in-out;
+      -moz-transition: display 1s, opacity 1s, height 1s ease-in-out;
+      -ms-transition: display 1s, opacity 1s, height 1s ease-in-out;
     }
 
     .accordion-text {
@@ -103,34 +99,8 @@
 
   .rotate {
     transform: rotate(45deg);
-    -webkit-transform: rotate(45deg); // -webkit-transition: all .3s ease .15s;
+    -webkit-transform: rotate(45deg);
     -moz-transform: rotate(45deg);
-    -o-transform: rotate(45deg);
     -ms-transform: rotate(45deg);
   }
-
-  // .btn-mnml {
-  //   color: #6c757d;
-
-  //   &:hover {
-  //     border-color: #6c757d;
-  //     background-color: $white;
-  //   }
-  // }
-
-  // .accordion-style-minimal {
-  //   background: #eee7e754;
-  //   color: $black;
-  //   -webkit-box-shadow: 7px 7px 14px -2px rgba(0, 0, 0, 0.21);
-  //   -moz-box-shadow: 7px 7px 14px -2px rgba(0, 0, 0, 0.21);
-  //   box-shadow: 7px 7px 14px -2px rgba(0, 0, 0, 0.21);
-  // }
-
-  // .accordion-style-gradient {
-  //   background-image: linear-gradient(to right, #004569, #015177, #015e85, #016b94, #0079a2);
-  //   color: $white;
-  //   -webkit-box-shadow: 7px 7px 14px -2px rgba(0, 0, 0, 0.21);
-  //   -moz-box-shadow: 7px 7px 14px -2px rgba(0, 0, 0, 0.21);
-  //   box-shadow: 7px 7px 14px -2px rgba(0, 0, 0, 0.21);
-  // }
 }
