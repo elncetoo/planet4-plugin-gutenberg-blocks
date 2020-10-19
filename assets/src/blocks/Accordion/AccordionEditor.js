@@ -1,8 +1,7 @@
-/* eslint-disable no-unused-vars */
-import { Component, Fragment } from '@wordpress/element'
-import { InspectorControls } from '@wordpress/block-editor'
-import withCharacterCounter from '../../components/withCharacterCounter/withCharacterCounter'
-import { URLInput } from '../../components/URLInput/URLInput'
+import { Component, Fragment } from '@wordpress/element';
+import { InspectorControls } from '@wordpress/block-editor';
+import withCharacterCounter from '../../components/withCharacterCounter/withCharacterCounter';
+import { URLInput } from '../../components/URLInput/URLInput';
 import {
   PanelBody,
   CheckboxControl,
@@ -10,43 +9,43 @@ import {
   Tooltip,
   Button,
   Dashicon
-} from '@wordpress/components'
+} from '@wordpress/components';
 
-const { RichText } = wp.blockEditor
-const { __ } = wp.i18n
-const TextControl = withCharacterCounter(BaseTextControl)
+const { RichText } = wp.blockEditor;
+const { __ } = wp.i18n;
+const TextControl = withCharacterCounter(BaseTextControl);
 export class AccordionEditor extends Component {
   constructor () {
-    super()
-    this.state = { isToggleOn: false }
+    super();
+    this.state = { isToggleOn: false };
 
-    this.handleErrors = this.handleErrors.bind(this)
-    this.toAttribute = this.toAttribute.bind(this)
-    this.handleCollapseClick = this.handleCollapseClick.bind(this)
+    this.handleErrors = this.handleErrors.bind(this);
+    this.toAttribute = this.toAttribute.bind(this);
+    this.handleCollapseClick = this.handleCollapseClick.bind(this);
   }
 
   handleCollapseClick () {
     this.setState(state => ({
       isToggleOn: !state.isToggleOn
-    }))
+    }));
 
-    this.state.isToggleOn === true ? $('.panel').removeClass('visibility') : $('.panel').addClass('visibility')
+    this.state.isToggleOn === true ? $('.panel').removeClass('visibility') : $('.panel').addClass('visibility');
   }
 
   toAttribute (attributeName) {
-    const { setAttributes } = this.props
+    const { setAttributes } = this.props;
     return value => {
-      setAttributes({ [attributeName]: value })
-    }
+      setAttributes({ [attributeName]: value });
+    };
   }
 
   handleErrors (errors) {
-    this.setState(errors)
+    this.setState(errors);
   }
 
   // renders the settings
   renderEdit () {
-    const { attributes } = this.props
+    const { attributes } = this.props;
 
     return (
       <Fragment>
@@ -74,12 +73,12 @@ export class AccordionEditor extends Component {
           </PanelBody>
         </InspectorControls>
       </Fragment>
-    )
+    );
   }
 
   // renders the editor view
   renderView () {
-    const { attributes } = this.props
+    const { attributes } = this.props;
 
     return <Fragment>
       <div className="block accordion-block my-3">
@@ -152,7 +151,7 @@ export class AccordionEditor extends Component {
         </div>
       </div>
       {/* <AccordionFrontend isEditing { ...attributes } handleErrors={ this.handleErrors } /> */}
-    </Fragment>
+    </Fragment>;
   }
 
   render () {
@@ -165,6 +164,6 @@ export class AccordionEditor extends Component {
         }
         {this.renderView()}
       </Fragment>
-    )
+    );
   }
 }

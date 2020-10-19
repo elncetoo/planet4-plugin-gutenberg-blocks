@@ -1,15 +1,15 @@
 /* eslint-disable no-unused-vars */
-import { Component } from '@wordpress/element'
-import { AccordionEditor } from './AccordionEditor'
-import { frontendRendered } from '../frontendRendered'
+import { Component } from '@wordpress/element';
+import { AccordionEditor } from './AccordionEditor';
+import { frontendRendered } from '../frontendRendered';
 
-const BLOCK_NAME = 'planet4-blocks/accordion'
+const BLOCK_NAME = 'planet4-blocks/accordion';
 
 export class AccordionBlock extends Component {
   constructor (props) {
-    super(props)
-    const { registerBlockType } = wp.blocks
-    const { __ } = wp.i18n
+    super(props);
+    const { registerBlockType } = wp.blocks;
+    const { __ } = wp.i18n;
 
     const attributes = {
       accordion_title: {
@@ -41,10 +41,6 @@ export class AccordionBlock extends Component {
         default: '',
         selector: '.accordion-text'
       },
-      // accordion_btn_show: {
-      //   type: 'boolean',
-      //   default: false
-      // },
       accordion_btn_text: {
         type: 'string',
         default: '',
@@ -59,19 +55,7 @@ export class AccordionBlock extends Component {
         type: 'boolean',
         default: false
       }
-      // accordion_icon: {
-      //   type: 'string',
-      //   default: '',
-      //   selector: '.accordion-icon'
-      // },
-      // accordion_style: { // Needed to convert existing blocks
-      //   type: 'string',
-      //   default: ''
-      // },
-
-      // },
-      // css_variables: CSS_VARIABLES_ATTRIBUTE,
-    }
+    };
 
     registerBlockType(BLOCK_NAME, {
       title: __('Accordion', 'planet4-blocks-backend'),
@@ -87,7 +71,7 @@ export class AccordionBlock extends Component {
         {
           attributes,
           save () {
-            return null
+            return null;
           }
         }
       ],
@@ -96,9 +80,9 @@ export class AccordionBlock extends Component {
           attributes={attributes}
           setAttributes={setAttributes}
           isSelected={ isSelected }
-        />
+        />;
       },
       save: frontendRendered(BLOCK_NAME)
-    })
+    });
   }
 }

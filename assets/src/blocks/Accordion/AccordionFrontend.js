@@ -1,50 +1,49 @@
 /* eslint-disable camelcase */
-import { Component, Fragment } from '@wordpress/element'
-import { Button } from '@wordpress/components'
+import { Component, Fragment } from '@wordpress/element';
 
-window.$ = $ || jQuery
-window.dataLayer = window.dataLayer || []
+window.$ = $ || jQuery;
+window.dataLayer = window.dataLayer || [];
 
 export class AccordionFrontend extends Component {
   constructor (props) {
-    super(props)
+    super(props);
     this.state = {
       _isMounted: false
-    }
-    this.handleReadMoreClick = this.handleReadMoreClick.bind(this)
-    this.onChangeContent = this.onChangeContent.bind(this)
+    };
+    this.handleReadMoreClick = this.handleReadMoreClick.bind(this);
+    this.onChangeContent = this.onChangeContent.bind(this);
   }
 
   handleReadMoreClick () {
     window.onclick = e => {
-      const btnRead = $(e.target.parentNode).text().substring(0, 50) + '...'
+      const btnRead = $(e.target.parentNode).text().substring(0, 50) + '...';
       dataLayer.push({
         event: 'Read More FAQ',
         Question: btnRead
-      })
-    }
+      });
+    };
   }
 
   componentDidMount () {
-    this.onChangeContent()
-    console.log('component Did Mount OK')
-    console.log(this._isMounted)
-    this._isMounted = true
+    this.onChangeContent();
+    console.log('component Did Mount OK');
+    console.log(this._isMounted);
+    this._isMounted = true;
     return () => {
-      this._isMounted = false
-    }
+      this._isMounted = false;
+    };
   }
 
   componentWillUnmount () {
-    this._isMounted = false
-    console.log('component Did UnMount OK')
-    console.log(this._isMounted)
-    this.handleReadMoreClick()
+    this._isMounted = false;
+    console.log('component Did UnMount OK');
+    console.log(this._isMounted);
+    this.handleReadMoreClick();
   }
 
   onChangeContent () {
-    console.log('onChangeContent OK')
-    this.handleReadMoreClick()
+    console.log('onChangeContent OK');
+    this.handleReadMoreClick();
   }
 
   render () {
@@ -54,42 +53,41 @@ export class AccordionFrontend extends Component {
       accordion_rows,
       accordion_headline,
       accordion_text,
-      // accordion_btn_show,
       accordion_btn_text,
       accordion_btn_url,
       button_link_new_tab,
       isEditing
-    } = this.props
+    } = this.props;
 
     // Toggle panels accordion - bug event opens on second click because of the double onclick event
-    const acc = document.getElementsByClassName('accordion')
+    const acc = document.getElementsByClassName('accordion');
 
     for (let p = 0; p < acc.length; p++) {
       acc[p].addEventListener('click', function () {
-        this.classList.toggle('active')
-        const panel = this.nextElementSibling
+        this.classList.toggle('active');
+        const panel = this.nextElementSibling;
         if (panel.style.display === 'block') {
-          panel.style.display = 'none'
+          panel.style.display = 'none';
           window.onclick = e => {
-            const txt = $(e.target).text().substring(0, 50) + '...'
-            $('.accordion-headline:before').removeClass('rotate')
+            const txt = $(e.target).text().substring(0, 50) + '...';
+            $('.accordion-headline:before').removeClass('rotate');
             dataLayer.push({
               event: 'Close FAQ',
               Question: txt
-            })
-          }
+            });
+          };
         } else {
-          panel.style.display = 'block'
+          panel.style.display = 'block';
           window.onclick = e => {
-            const txt = $(e.target).text().substring(0, 50) + '...'
-            $('.accordion-headline:before').addClass('rotate')
+            const txt = $(e.target).text().substring(0, 50) + '...';
+            $('.accordion-headline:before').addClass('rotate');
             dataLayer.push({
               event: 'Expand FAQ',
               Question: txt
-            })
-          }
+            });
+          };
         }
-      })
+      });
     }
 
     return (
@@ -127,6 +125,6 @@ export class AccordionFrontend extends Component {
         </section>
         }
       </Fragment>
-    )
+    );
   }
 }
