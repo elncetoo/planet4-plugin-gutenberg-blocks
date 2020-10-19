@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { Component, Fragment } from '@wordpress/element';
 import { InspectorControls } from '@wordpress/block-editor';
 import withCharacterCounter from '../../components/withCharacterCounter/withCharacterCounter';
