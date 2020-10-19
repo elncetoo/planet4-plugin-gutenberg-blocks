@@ -62,10 +62,6 @@ class Accordion extends Base_Block {
 									'type'    => 'string',
 									'default' => '',
 								],
-								// 'accordion_btn_show' => [
-								// 'type'    => 'boolean',
-								// 'default' => false,
-								// ],
 								'accordion_btn_url'   => [
 									'type'    => 'string',
 									'default' => '',
@@ -98,7 +94,6 @@ class Accordion extends Base_Block {
 			'accordion_headline'    => $attributes['accordion_headline'] ?? '',
 			'accordion_text'        => $attributes['accordion_text'] ?? '',
 			'accordion_btn_text'    => $attributes['accordion_btn_text'] ?? '',
-			// 'accordion_btn_show'    => $attributes['accordion_btn_show'] ?? '',
 			'accordion_btn_url'     => $attributes['accordion_btn_url'] ?? '',
 			'button_link_new_tab'   => $attributes['button_link_new_tab'] ?? '',
 

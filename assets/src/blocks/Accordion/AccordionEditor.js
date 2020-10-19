@@ -18,7 +18,7 @@ const TextControl = withCharacterCounter(BaseTextControl)
 export class AccordionEditor extends Component {
   constructor () {
     super()
-    this.state = { isToggleOn: true }
+    this.state = { isToggleOn: false }
 
     this.handleErrors = this.handleErrors.bind(this)
     this.toAttribute = this.toAttribute.bind(this)
@@ -52,13 +52,6 @@ export class AccordionEditor extends Component {
       <Fragment>
         <InspectorControls>
           <PanelBody title={__('Setting', 'planet4-blocks-backend')}>
-            {/* <CheckboxControl
-              label={__('Display or hide the button', 'planet4-blocks-backend')}
-              help={__('Your default is set to [ hide ]', 'planet4-blocks-backend')}
-              value={attributes.accordion_btn_show}
-              checked={attributes.button_link_new_tab}
-              onChange={this.toAttribute('accordion_btn_show')}
-            /> */}
             <TextControl
               label={__('Button Text', 'planet4-blocks-backend')}
               placeholder={__('Override button text', 'planet4-blocks-backend')}
